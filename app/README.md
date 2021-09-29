@@ -17,6 +17,10 @@ docker-compose up
 
 no localhost:3000 vai estar a aplicação
 
+Site da aplicação:
+
+https://intteract.herokuapp.com/
+
 <!--
 # Getting Started with Create React App
 
