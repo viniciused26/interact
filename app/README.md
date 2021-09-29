@@ -3,9 +3,9 @@ Para rodar a aplicação
 Estando na pasta do dockerfile, que seria app, use o comando:
 docker build -t interact .
 
-build para construir a aplicação na tua máquina
--t para dar o nome para a imagem
-interact sendo o nome da imagem
+build para construir a aplicação na tua máquina,
+-t para dar o nome para a imagem,
+interact sendo o nome da imagem,
 . para indicar a pasta onde está
 
 Pode demorar um pouco
