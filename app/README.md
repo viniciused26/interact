@@ -1,3 +1,25 @@
+Para rodar a aplicação
+
+Estando na pasta do dockerfile, que seria app, use o comando:
+docker build -t interact .
+
+build para construir a aplicação na tua máquina
+-t para dar o nome para a imagem
+interact sendo o nome da imagem
+. para indicar a pasta onde está
+
+Pode demorar um pouco
+
+Quando terminar digite o comando:
+docker run interact
+
+docker run para iniciar a aplicação
+interact é o nome da imagem que quer iniciar
+
+depois é só ir até o endereço on you network: 172.17.0.2.3000
+ainda não descobri porque no localhost 3000 não está funfando, mas é a meta
+
+<!--
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
