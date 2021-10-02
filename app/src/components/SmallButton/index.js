@@ -1,14 +1,14 @@
 import React from 'react'
 import * as S from './styles'
 
-function Button(props) {
+function SmallButton(props) {
   return (
     <S.Container color={props.color}>
-      <button className="button" {...props}>
+      <button className="button">
         <span>{props.title}</span>
       </button>
     </S.Container>
   )
 }
 
-export default Button
+export default SmallButton

@@ -2,19 +2,15 @@ import React from 'react'
 import * as S from './styles'
 
 //componentes
-import Button2 from '../../components/Button2'
+import SmallButton from '../../components/SmallButton'
 
 function Homepage() {
   return (
     <S.Container>
-      <S.Center>
         <span>
-          Crie uma nova sala <br />
+          Crie uma nova sala e convide participantes<br />
         </span>
-        <input type="text" placeholder="Digite o código da sala" />
-        <input type="text" placeholder="Nome da sala" />
-      </S.Center>
-      <Button2 color={'#E94560'} title={'CRIAR SALA'} />
+      <SmallButton color={'#E94560'} title={'CRIAR'} />
     </S.Container>
   )
 }

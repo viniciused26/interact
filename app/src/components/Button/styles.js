@@ -26,6 +26,7 @@ export const Container = styled.div`
       cursor: not-allowed;
     }
 
+    
     span {
       color: #fff;
       font-weight: bold;

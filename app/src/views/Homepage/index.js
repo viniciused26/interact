@@ -1,7 +1,6 @@
 import React from 'react'
 import * as S from './styles'
 
-//componentes
 import Button from '../../components/Button'
 
 function Homepage() {

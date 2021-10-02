@@ -9,21 +9,11 @@ export const Container = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
-`
-
-export const Center = styled.div`
-  widht: 320px;
-  height: 500px;
-
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
 
   input {
-    color: #16213e;
+    margin-bottom: 25px;
+    color: #16213E;
     font-size: 16px;
-    margin-bottom: 46px;
     width: 260px;
     height: 50px;
     border-radius: 8px;
@@ -31,13 +21,15 @@ export const Center = styled.div`
     background: #fff;
     border: 2px solid #16213e;
   }
+
   input::placeholder {
-    color: #16213e;
+    color: #16213E;
   }
-  span {
-    margin-bottom: 27px;
+  
+  span {            
+    margin-bottom: 25px;
     text-align: center;
-    color: #16213e;
+    color: #16213E;
     font-size: 20px;
     font-weight: bold;
   }

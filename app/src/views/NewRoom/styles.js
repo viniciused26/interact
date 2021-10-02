@@ -9,29 +9,9 @@ export const Container = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
-`
 
-export const Center = styled.div`
-  widht: 320px;
-  height: 500px;
-
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-
-  input {
-    font-size: 16px;
-    margin-bottom: 46px;
-    width: 260px;
-    height: 50px;
-    border-radius: 8px;
-    padding: 0 16px;
-    background: #fff;
-    border: 1px solid #a8a8b3;
-  }
   span {
-    margin-bottom: 27px;
+    margin-bottom: 25px;
     text-align: center;
     color: #fff;
     font-size: 20px;

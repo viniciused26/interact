@@ -2,20 +2,14 @@ import React from 'react'
 import * as S from './styles'
 
 //componentes
-import Button2 from '../../components/Button2'
+import SmallButton from '../../components/SmallButton'
 
 function Homepage() {
   return (
     <S.Container>
-      <S.Center>
-        <span>
-          Entrar em uma sala
-          <br />
-        </span>
-        <input type="text" placeholder="Como você deseja ser chamado?" />
-        <input type="text" placeholder="Código da sala" />
-      </S.Center>
-      <Button2 color={'#0F3460'} title={'ENTRAR NA SALA'} />
+      <span> Digite o código para entrar em uma sala </span>
+      <input type="text" placeholder="Código da sala"/>
+      <SmallButton color={'#0F3460'} title={'ENTRAR'} />
     </S.Container>
   )
 }

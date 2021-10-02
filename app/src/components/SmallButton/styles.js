@@ -2,15 +2,13 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
   .button {
-    width: 310px;
+    width: 320px;
     height: 60px;
     background: ${props => props.color};
     border-radius: 20px;
 
-    display: flex;
     justify-content: center;
     align-items: center;
-    margin: 40px;
 
     cursor: pointer;
     border: 0;
