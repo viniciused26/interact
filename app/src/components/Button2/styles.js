@@ -2,8 +2,8 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
   .button {
-    width: 350px;
-    height: 100px;
+    width: 310px;
+    height: 60px;
     background: ${props => props.color};
     border-radius: 20px;
 
