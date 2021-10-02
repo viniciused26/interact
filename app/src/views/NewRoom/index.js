@@ -14,7 +14,7 @@ function Homepage() {
         <input type="text" placeholder="Digite o código da sala" />
         <input type="text" placeholder="Nome da sala" />
       </S.Center>
-      <Button2 color={'#0F3460'} title={'CRIAR SALA'} />
+      <Button2 color={'#E94560'} title={'CRIAR SALA'} />
     </S.Container>
   )
 }
