@@ -8,7 +8,7 @@ function Homepage() {
   const history = useHistory()
 
   function navigateToNewRoom() {
-    history.push('/rooms/new')
+    history.push('/rooms/code')
   }
 
   function navigateToCreatRoom() {
