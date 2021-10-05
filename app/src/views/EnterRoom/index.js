@@ -3,15 +3,13 @@ import * as S from './styles'
 import { useHistory } from 'react-router-dom'
 
 //componentes
-//import SmallButton from '../../components/SmallButton'
-import Button from '../../components/Button'
 import SmallButton from '../../components/SmallButton'
 
 function Homepage() {
   const history = useHistory()
 
   function navigateToAnsRoom() {
-    history.push('/rooms/code')
+    history.push('/')
   }
 
   return (
