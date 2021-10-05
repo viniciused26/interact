@@ -29,5 +29,20 @@ export const RightSide = styled.div`
     width: 50px;
     height: 50px;
   }
+
+  button{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+
+    &:not(:disabled):hover {
+      filter: brightness(0.9);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
 `
 

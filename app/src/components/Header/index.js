@@ -12,7 +12,9 @@ function Header(props) {
       </S.LeftSide>
         
       <S.RightSide>
-        <img src={closebtn} alt="Fechar Sala"/>
+        <button>
+          <img src={closebtn} alt="Fechar Sala"/>
+          </button>
       </S.RightSide>
     </S.Container> 
     

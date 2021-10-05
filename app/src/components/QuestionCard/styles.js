@@ -12,6 +12,12 @@ export const Container = styled.div`
   margin-top: 30px;
   
   display: flex;
+
+  span{
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+  }
 `
 export const LeftSide = styled.div`
   width: 80%;
@@ -36,6 +42,21 @@ export const RightSide = styled.div`
   justify-content: flex-end;
   align-items: center;
   padding-right: 25px;
+
+  button{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+
+    &:not(:disabled):hover {
+      filter: brightness(0.9);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
 
   img{
     width: 50px;

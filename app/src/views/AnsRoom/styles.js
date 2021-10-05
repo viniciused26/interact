@@ -6,11 +6,11 @@ export const Container = styled.div`
   background: #1a1a2e;
 `
 export const LeftSide = styled.div`
-  width: 50%;
+  width: 65%;
   float: left;
 `
 export const RightSide = styled.div`
-  width: 50%;
+  width: 35%;
   float: left;
   
   display: flex;
