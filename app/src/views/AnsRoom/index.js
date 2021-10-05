@@ -9,14 +9,47 @@ import Modal from '../../components/Modal'
 
 function AnsRoom() {
   const [showModal, setShowModal] = React.useState(false);
+  const [modalOpt, setModalOpt] = React.useState([]);
+
+  const modalOptions = [
+    {
+      text: "Deseja mesmo limpar estas perguntas?",
+      textInput: false,
+      firstBtn: "#379392",
+      firstBtnText: "SIM",
+      secndBtn: "#E94560",
+      secndBtnText: "NÃO",
+    },
+    {
+      text: "XLR8",
+      textInput: false,
+      firstBtn: "#379392",
+      firstBtnText: "COPIAR CÓDIGO",
+      secndBtn: "#379392",
+      secndBtnText: "COPIAR LINK",
+    },
+    {
+      text: "Deseja mesmo encerrar a sala?",
+      textInput: false,
+      firstBtn: "#379392",
+      firstBtnText: "SIM",
+      secndBtn: "#E94560",
+      secndBtnText: "NÃO",
+    },
+  ];
 
   const openModal = () => {
     setShowModal(prev => !prev);
   }
 
+  const setModalOption = (num) => {
+    setModalOpt(modalOptions[num]);
+  }
+
+
   return (
     <S.Container>
-      <Modal showModal={showModal} setShowModal={setShowModal}/>
+      <Modal showModal={showModal} setShowModal={setShowModal} modalOptions={modalOpt}/>
       <Header/>
 
       <S.LeftSide>
@@ -27,12 +60,11 @@ function AnsRoom() {
       </S.LeftSide>
 
       <S.RightSide>
-        <Button color={'#E94560'} title={'LIMPAR PERGUNTAS'} />
-        <Button color={'#379392'} title={'COMPARTILHAR SALA'} onClick={openModal}/>
+        <Button color={'#E94560'} title={'LIMPAR PERGUNTAS'} onClick={() => {openModal(); setModalOption(0);}}/>
+        <Button color={'#379392'} title={'COMPARTILHAR SALA'} onClick={() => {openModal(); setModalOption(1);}}/>
       </S.RightSide> 
 
-      
-     
+    
 
     </S.Container>
   )
