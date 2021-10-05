@@ -8,27 +8,23 @@ function Homepage() {
   const history = useHistory()
 
   function navigateToNewRoom() {
-    history.push('/rooms/new')
+    history.push('/rooms/enter')
   }
 
   function navigateToCreatRoom() {
-    history.push('/rooms/enter')
+    history.push('/rooms/code')
   }
 
   return (
     <S.Container>
       <S.LeftSide>
-        <Button onClick={navigateToNewRoom} color={'#E94560'} title={'CRIAR'} />
+        <Button onClick={navigateToCreatRoom} color={'#E94560'} title={'CRIAR'} />
         <span>
           Crie uma sala para seus espectadores <br /> interagirem com você!
         </span>
       </S.LeftSide>
       <S.RightSide>
-        <Button
-          onClick={navigateToCreatRoom}
-          color={'#0F3460'}
-          title={'ENTRAR'}
-        />
+        <Button onClick={navigateToNewRoom} color={'#0F3460'} title={'ENTRAR'} />
         <span>
           Entre em uma sala para interagir <br /> com um apresentador e seus
           espectadores!
