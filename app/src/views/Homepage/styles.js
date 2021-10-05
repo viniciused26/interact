@@ -7,7 +7,7 @@ export const Container = styled.div`
 `
 
 export const LeftSide = styled.div`
-  width: 45%;
+  width: 50%;
   height: 100vh;
   background: #1a1a2e;
 
@@ -25,7 +25,7 @@ export const LeftSide = styled.div`
 `
 
 export const RightSide = styled.div`
-  width: 55%;
+  width: 50%;
   height: 100vh;
   background: #fff;
 

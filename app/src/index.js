@@ -5,6 +5,7 @@ import Homepage from './views/Homepage'
 import EnterRoom from './views/EnterRoom'
 import NewRoom from './views/NewRoom'
 import AnsRoom from './views/AnsRoom'
+import AskRoom from './views/AskRoom'
 
 ReactDOM.render(
   <BrowserRouter>
@@ -12,6 +13,7 @@ ReactDOM.render(
     <Route path="/rooms/new" component={NewRoom} />
     <Route path="/rooms/enter" component={EnterRoom} />
     <Route path="/rooms/code" component={AnsRoom} />
+    <Route path="/rooms/ask" component={AskRoom} />
   </BrowserRouter>,
   document.getElementById('root')
 )

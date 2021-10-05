@@ -4,10 +4,10 @@ import * as S from './styles'
 
 import Header from '../../components/Header'
 import QuestionCard from '../../components/QuestionCard'
-import Button from '../../components/Button'
+import SmallButton from '../../components/SmallButton'
 import Modal from '../../components/Modal'
 
-function AnsRoom() {
+function AskRoom() {
   const [showModal, setShowModal] = React.useState(false);
   const [modalOpt, setModalOpt] = React.useState([]);
 
@@ -57,24 +57,34 @@ function AnsRoom() {
   return (
     <S.Container>
       <Modal showModal={showModal} setShowModal={setShowModal} modalOptions={modalOpt}/>
-      <Header isModerator={true}/>
+      <Header isModerator={false}/>
 
       <S.LeftSide>
-        <QuestionCard upvotes={"9"} isModerator={true} text={"Você vai viajar para Europa?"} isSmall={true}/>
-        <QuestionCard upvotes={"8"} isModerator={true} text={"Você vai viajar para Ásia?"} isSmall={true}/>
-        <QuestionCard upvotes={"6"} isModerator={true} text={"Você vai viajar para Oceania?"} isSmall={true}/>
-        <QuestionCard upvotes={"4"} isModerator={true} text={"Você vai viajar para Marte?"} isSmall={true}/>
+        <h1>Perguntas Mais Votadas</h1>
+        <QuestionCard upvotes={"9"} isModerator={false} text={"Você vai viajar para Europa?"} isSmall={true}/>
+        <QuestionCard upvotes={"8"} isModerator={false} text={"Você vai viajar para Ásia?"} isSmall={true}/>
+        <QuestionCard upvotes={"6"} isModerator={false} text={"Você vai viajar para Oceania?"} isSmall={true}/>
+        <QuestionCard upvotes={"4"} isModerator={false} text={"Você vai viajar para Marte?"} isSmall={true}/>
       </S.LeftSide>
 
       <S.RightSide>
-        <Button color={'#E94560'} title={'LIMPAR PERGUNTAS'} onClick={() => {openModal(); setModalOption(0);}}/>
-        <Button color={'#379392'} title={'COMPARTILHAR SALA'} onClick={() => {openModal(); setModalOption(1);}}/>
+        
+        <QuestionCard upvotes={"9"} isModerator={false} text={"Você vai viajar para Europa?"} isSmall={true}/>
+        <QuestionCard upvotes={"8"} isModerator={false} text={"Você vai viajar para Ásia?"} isSmall={true}/>
+        <QuestionCard upvotes={"6"} isModerator={false} text={"Você vai viajar para Oceania?"} isSmall={true}/>
+        <QuestionCard upvotes={"4"} isModerator={false} text={"Você vai viajar para Marte?"} isSmall={true}/>
+        <QuestionCard upvotes={"4"} isModerator={false} text={"Você vai viajar para Marte?"} isSmall={true}/>
       </S.RightSide> 
 
-    
+      <S.Bottom>
+        <input type="text" placeholder="Digite aqui sua pergunta" />
+        <SmallButton onClick={null} color={'#E94560'} title={'Enviar Pergunta'} />
+      </S.Bottom>
+
+      
 
     </S.Container>
   )
 }
 
-export default AnsRoom
+export default AskRoom

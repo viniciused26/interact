@@ -5,38 +5,39 @@ import { useSpring, animated } from 'react-spring'
 import Button from '../../components/Button'
 import closebtn from '../../assets/closeButton.png'
 
-function Modal({showModal, setShowModal, modalOptions}) {
+function Modal(props) {
   const modalRef = useRef()
 
   const animation = useSpring({
     config: {
       duration: 250
     },
-    opacity: showModal ? 1 : 0,
-    transform: showModal ? `translateY(0%)` : `translateY(-100%)` 
+    opacity: props.showModal ? 1 : 0,
+    transform: props.showModal ? `translateY(0%)` : `translateY(-100%)` 
   })
-
 
   return (
     <div>
-      {showModal ? (
+      {props.showModal ? (
         <S.Background>
           <animated.div style={animation}>
-          <S.ModalWrapper showModal={showModal}>
+          <S.ModalWrapper showModal={props.showModal}>
+            
             <S.Top>
-            <button onClick={()=> setShowModal(prev=>!prev)}>
-              <img src={closebtn} alt="Fechar Sala"/>
-            </button>
+              <button onClick={()=> props.setShowModal(prev=>!prev)}>
+                <img src={closebtn} alt="Fechar Sala"/>
+              </button>
             </S.Top>
 
             <S.Middle>
-            <span>{modalOptions.text}</span>
+              <span>{props.modalOptions.text}</span>
             </S.Middle>
 
             <S.Bottom>
-            <Button color={modalOptions.firstBtn} title={modalOptions.firstBtnText} />
-            <Button color={modalOptions.secndBtn} title={modalOptions.firstBtnText} />
+              <Button color={props.modalOptions.firstBtnColor} title={props.modalOptions.firstBtnText} onClick={props.modalOptions.firstBtnFunc}/>
+              <Button color={props.modalOptions.secndBtnColor} title={props.modalOptions.secndBtnText} onClick={props.modalOptions.secndBtnFunc}/>
             </S.Bottom>
+          
           </S.ModalWrapper>
           </animated.div>
         </S.Background>

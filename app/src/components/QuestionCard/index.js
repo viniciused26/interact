@@ -11,7 +11,7 @@ function QuestionCard(props) {
   const [isClicked, setIsClicked] = React.useState(false);
 
   return (
-    <S.Container>
+    <S.Container width={props.isSmall == false ? "950px" : "750px"}>
       <S.LeftSide>
         <span>{props.text}</span>
       </S.LeftSide>
