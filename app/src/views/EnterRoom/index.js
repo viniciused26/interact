@@ -8,7 +8,7 @@ function Homepage() {
   const history = useHistory()
 
   function navigateToAnsRoom() {
-    history.push('/rooms/code')
+    history.push('/rooms/ask')
   }
 
   return (
