@@ -15,6 +15,14 @@ function AnsRoom() {
     console.log("insira aqui a função do botão");
   }
 
+  function copyCodeToClipboard() {
+    navigator.clipboard.writeText('XLR8')
+  }
+
+  function copyLinkToClipboard() {
+    navigator.clipboard.writeText('https://github.com/viniciused26/interact/tree/vinicius-front')
+  }
+
   const openModal = () => {
     setShowModal(prev => !prev);
   }
@@ -31,16 +39,16 @@ function AnsRoom() {
       firstBtnFunc: testFunction,
       secndBtnColor: "#E94560",
       secndBtnText: "NÃO",
-      secndBtnFunc: testFunction,
+      secndBtnFunc: openModal,
     },
     {
       text: "XLR8",
       firstBtnColor: "#379392",
       firstBtnText: "COPIAR CÓDIGO",
-      firstBtnFunc: testFunction,
+      firstBtnFunc: copyCodeToClipboard,
       secndBtnColor: "#379392",
       secndBtnText: "COPIAR LINK",
-      secndBtnFunc: testFunction,
+      secndBtnFunc: copyLinkToClipboard,
     },
     {
       text: "Deseja mesmo encerrar a sala?",
@@ -53,25 +61,24 @@ function AnsRoom() {
     },
   ];
 
-
   return (
     <S.Container>
-      <Modal showModal={showModal} setShowModal={setShowModal} modalOptions={modalOpt}/>
-      <Header isModerator={true}/>
+      <Modal showModal={showModal} setShowModal={setShowModal} modalOptions={modalOpt} />
+      <Header isModerator={true} />
 
       <S.LeftSide>
-        <QuestionCard upvotes={"9"} isModerator={true} text={"Você vai viajar para Europa?"} isSmall={true}/>
-        <QuestionCard upvotes={"8"} isModerator={true} text={"Você vai viajar para Ásia?"} isSmall={true}/>
-        <QuestionCard upvotes={"6"} isModerator={true} text={"Você vai viajar para Oceania?"} isSmall={true}/>
-        <QuestionCard upvotes={"4"} isModerator={true} text={"Você vai viajar para Marte?"} isSmall={true}/>
+        <QuestionCard upvotes={"9"} isModerator={true} text={"Você vai viajar para Europa?"} isSmall={true} />
+        <QuestionCard upvotes={"8"} isModerator={true} text={"Você vai viajar para Ásia?"} isSmall={true} />
+        <QuestionCard upvotes={"6"} isModerator={true} text={"Você vai viajar para Oceania?"} isSmall={true} />
+        <QuestionCard upvotes={"4"} isModerator={true} text={"Você vai viajar para Marte?"} isSmall={true} />
       </S.LeftSide>
 
       <S.RightSide>
-        <Button color={'#E94560'} title={'LIMPAR PERGUNTAS'} onClick={() => {openModal(); setModalOption(0);}}/>
-        <Button color={'#379392'} title={'COMPARTILHAR SALA'} onClick={() => {openModal(); setModalOption(1);}}/>
-      </S.RightSide> 
+        <Button color={'#E94560'} title={'LIMPAR PERGUNTAS'} onClick={() => { openModal(); setModalOption(0); }} />
+        <Button color={'#379392'} title={'COMPARTILHAR SALA'} onClick={() => { openModal(); setModalOption(1); }} />
+      </S.RightSide>
 
-    
+
 
     </S.Container>
   )
