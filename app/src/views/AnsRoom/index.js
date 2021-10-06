@@ -17,10 +17,12 @@ function AnsRoom() {
 
   function copyCodeToClipboard() {
     navigator.clipboard.writeText('XLR8')
+    openModal()
   }
 
   function copyLinkToClipboard() {
     navigator.clipboard.writeText('https://github.com/viniciused26/interact/tree/vinicius-front')
+    openModal()
   }
 
   const openModal = () => {
@@ -50,15 +52,7 @@ function AnsRoom() {
       secndBtnText: "COPIAR LINK",
       secndBtnFunc: copyLinkToClipboard,
     },
-    {
-      text: "Deseja mesmo encerrar a sala?",
-      firstBtnColor: "#379392",
-      firstBtnText: "SIM",
-      firstBtnFunc: testFunction,
-      secndBtnColor: "#E94560",
-      secndBtnText: "NÃO",
-      secndBtnFunc: testFunction,
-    },
+
   ];
 
   return (
