@@ -11,15 +11,17 @@ function Homepage() {
     history.push('/rooms/code')
   }
 
+  function navigateToHomepage() {
+    history.push('/')
+  }
+
   return (
     <S.Container>
       <span> Digite o código para entrar em uma sala </span>
-      <input type="text" placeholder="Código da sala" />
-      <SmallButton
-        onClick={navigateToAnsRoom}
-        color={'#0F3460'}
-        title={'ENTRAR'}
-      />
+      <input type="text" placeholder="XLR8" />
+      <SmallButton onClick={navigateToAnsRoom} color={'#0F3460'} title={'ENTRAR'} />
+      <br />
+      <SmallButton onClick={navigateToHomepage} color={'#E94560'} title={'VOLTAR'} />
     </S.Container>
   )
 }

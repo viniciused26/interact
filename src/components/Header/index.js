@@ -5,13 +5,16 @@ import logo from '../../assets/logo.png'
 import closebtn from '../../assets/closeButton.png'
 import leavebtn from '../../assets/leaveButton.png'
 import Modal from '../../components/Modal'
+import { useHistory } from 'react-router-dom'
 
 function Header(props) {
   const [showModal, setShowModal] = React.useState(false);
   const [modalOpt, setModalOpt] = React.useState([]);
 
-  const testFunction = () => {
-    console.log("insira aqui a função do botão");
+  const history = useHistory()
+
+  function navigateToHomepage() {
+    history.push('/')
   }
 
   const openModal = () => {
@@ -27,7 +30,7 @@ function Header(props) {
       text: "Deseja mesmo encerrar a sala?",
       firstBtnColor: "#379392",
       firstBtnText: "SIM",
-      firstBtnFunc: testFunction,
+      firstBtnFunc: navigateToHomepage,
       secndBtnColor: "#E94560",
       secndBtnText: "NÃO",
       secndBtnFunc: openModal,
@@ -36,29 +39,27 @@ function Header(props) {
       text: "Deseja mesmo sair da sala?",
       firstBtnColor: "#379392",
       firstBtnText: "SIM",
-      firstBtnFunc: testFunction,
+      firstBtnFunc: navigateToHomepage,
       secndBtnColor: "#E94560",
       secndBtnText: "NÃO",
       secndBtnFunc: openModal,
     }
   ];
 
-  
-  
   return (
     <S.Container>
-      <Modal showModal={showModal} setShowModal={setShowModal} modalOptions={modalOpt}/>
+      <Modal showModal={showModal} setShowModal={setShowModal} modalOptions={modalOpt} />
       <S.LeftSide>
-        <img src={logo} alt="Logo"/>
+        <img src={logo} alt="Logo" />
       </S.LeftSide>
-        
+
       <S.RightSide>
-        <button onClick={() => {openModal(); setModalOption(props.isModerator == false ? 1 : 0);}}>
-          {props.isModerator == false ?  <img src={leavebtn} alt="Fechar Sala"/> : <img src={closebtn} alt="Fechar Sala"/>}
+        <button onClick={() => { openModal(); setModalOption(props.isModerator == false ? 1 : 0); }}>
+          {props.isModerator == false ? <img src={leavebtn} alt="Fechar Sala" /> : <img src={closebtn} alt="Fechar Sala" />}
         </button>
       </S.RightSide>
-    </S.Container> 
-    
+    </S.Container>
+
   )
 }
 
