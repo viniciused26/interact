@@ -61,6 +61,13 @@ function AnsRoom(props) {
     return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
   }, [])
 
+  function sortQuestions(questions) {
+    var sortedQuestions = questions.slice().sort(function(a,b){
+      return b.concordaram.length - a.concordaram.length
+    })
+    return sortedQuestions
+  }
+
   const modalOptions = [
     {
       text: "Deseja mesmo limpar estas perguntas?",
@@ -82,15 +89,16 @@ function AnsRoom(props) {
     },
   ];
 
+
   return (
     <S.Container>
       <Modal showModal={showModal} setShowModal={setShowModal} modalOptions={modalOpt} />
-      <Header isModerator={true} navigateToHomepage={testFunction}/>
+      <Header isModerator={true} navigateToHomepage={navigateToHomepage}/>
 
       <S.LeftSide>
-        {sala ? sala.perguntas.map(pergunta => {
+        {sala ? sortQuestions(sala.perguntas).map(pergunta => {
           if(!pergunta.is_respondida)
-          return <QuestionCard onClick={() => { openModal(); setModalOption(0); }} id={pergunta.id_pergunta} upvotes={pergunta.concordaram.length} isModerator={true} text={pergunta.conteudo} isSmall={true} />
+          return <QuestionCard isVote={pergunta.is_respondida}onClick={() => { openModal(); setModalOption(0); }} id={pergunta.id_pergunta} upvotes={pergunta.concordaram.length} isModerator={true} text={pergunta.conteudo} isSmall={true} />
         }) : null}
       </S.LeftSide>
 
