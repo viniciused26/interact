@@ -49,17 +49,17 @@ function QuestionCard(props) {
       <S.RightSide>
         <button
           onClick={() =>
-            props.isVoted ? setIsClicked(true) : setIsClicked(false)
+            isClicked ? setIsClicked(false) : setIsClicked(true)
           }
         >
           {props.isModerator == false ? (
             <img
-              src={props.isVoted ? upvoteButtonTrue : upvoteButtonFalse}
+              src={isClicked ? upvoteButtonTrue : upvoteButtonFalse}
               alt="Fechar Sala"
             />
           ) : (
             <img
-              src={isClicked == false ? readButtonFalse : readButtonTrue}
+              src={isClicked ? readButtonTrue : readButtonFalse}
               alt="Fechar Sala"
             />
           )}
