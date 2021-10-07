@@ -8,25 +8,35 @@ import upvoteButtonFalse from '../../assets/upvoteButtonFalse.png'
 import upvoteButtonTrue from '../../assets/upvoteButtonTrue.png'
 
 function QuestionCard(props) {
-  const [isClicked, setIsClicked] = React.useState(false);
+  const [isClicked, setIsClicked] = React.useState(false)
 
   return (
-    <S.Container width={props.isSmall == false ? "950px" : "750px"}>
+    <S.Container width={props.isSmall == false ? '950px' : '80%'}>
       <S.LeftSide>
         <span>{props.text}</span>
       </S.LeftSide>
-        
+
       <S.RightSide>
-        <button onClick={() => isClicked == false ? setIsClicked(true) : setIsClicked(false)}>
-          {props.isModerator == false ? 
-            <img src={isClicked == false ? upvoteButtonFalse : upvoteButtonTrue} alt="Fechar Sala"/>  :
-            <img src={isClicked == false ? readButtonFalse : readButtonTrue} alt="Fechar Sala"/>
+        <button
+          onClick={() =>
+            isClicked == false ? setIsClicked(true) : setIsClicked(false)
           }
+        >
+          {props.isModerator == false ? (
+            <img
+              src={isClicked == false ? upvoteButtonFalse : upvoteButtonTrue}
+              alt="Fechar Sala"
+            />
+          ) : (
+            <img
+              src={isClicked == false ? readButtonFalse : readButtonTrue}
+              alt="Fechar Sala"
+            />
+          )}
         </button>
         <span>{props.upvotes}</span>
       </S.RightSide>
-    </S.Container> 
-    
+    </S.Container>
   )
 }
 
