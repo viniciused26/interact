@@ -16,6 +16,10 @@ function Homepage() {
     else history.push(`/rooms/${sala}`)
     
   }, [sala])
+
+  function navigateToJoinRoom() {
+    history.push('/rooms/enter')
+  }
   
 
   const navigateToCreateRoom = React.useCallback(() => {
@@ -34,7 +38,7 @@ function Homepage() {
         </span>
       </S.LeftSide>
       <S.RightSide>
-        <Button onClick={()=>console.log(sala)} color={'#0F3460'} title={'ENTRAR'} />
+        <Button onClick={navigateToJoinRoom} color={'#0F3460'} title={'ENTRAR'} />
         <span>
           Entre em uma sala para interagir <br /> com um apresentador e seus
           espectadores!
