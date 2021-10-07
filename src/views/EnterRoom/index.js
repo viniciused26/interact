@@ -14,7 +14,10 @@ function Homepage() {
   React.useLayoutEffect(() => {
     if (firstUpdate.current) firstUpdate.current = false;
     else {
-      api.post('/usuarios', {id_sala: sala})
+      if(localStorage.getItem('id_usuario'))
+        api.put(`/usuarios/${localStorage.getItem('id_usuario')}`, {id_sala: sala})
+      else
+        api.post('/usuarios', {id_sala: sala}).then(response => localStorage.setItem('id_usuario', response.data.id_usuario))
       history.push(`/rooms/ask/${sala}`)
     }
     

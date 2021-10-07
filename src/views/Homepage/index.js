@@ -23,9 +23,13 @@ function Homepage() {
   
 
   const navigateToCreateRoom = React.useCallback(() => {
-    api.post('/usuarios', {}).then(response => {
-      api.post('/salas', {id_moderador: response.data.id_usuario}).then(response => setSala(response.data.id_sala))
-    })
+    if(localStorage.getItem('id_usuario'))
+      api.post('/salas', {id_moderador: localStorage.getItem('id_usuario')}).then(response => setSala(response.data.id_sala))
+    else
+      api.post('/usuarios', {}).then(response => {
+        localStorage.setItem('id_usuario', response.data.id_usuario)
+        api.post('/salas', {id_moderador: response.data.id_usuario}).then(response => setSala(response.data.id_sala))
+      })
     
   })
 
