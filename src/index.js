@@ -10,7 +10,7 @@ ReactDOM.render(
   <BrowserRouter>
     <Route path="/" exact component={Homepage} />
     <Route path="/rooms/enter" component={EnterRoom} />
-    <Route path="/rooms/code" component={AnsRoom} />
+    <Route path="/rooms/:id_sala" component={AnsRoom} />
     <Route path="/rooms/ask" component={AskRoom} />
   </BrowserRouter>,
   document.getElementById('root')

@@ -7,12 +7,14 @@ import QuestionCard from '../../components/QuestionCard'
 import Button from '../../components/Button'
 import Modal from '../../components/Modal'
 
+import roomData from '../Homepage/index'
+
 function AnsRoom() {
   const [showModal, setShowModal] = React.useState(false);
   const [modalOpt, setModalOpt] = React.useState([]);
 
   const testFunction = () => {
-    console.log("insira aqui a função do botão");
+    console.log("aki ", roomData);
   }
 
   function copyCodeToClipboard() {
