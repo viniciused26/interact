@@ -3,7 +3,9 @@ import styled from 'styled-components'
 export const Container = styled.div`
   width: 100%;
   height: 100vh;
-  background: #1a1a2e;
+  background-color: #1a1a2e;
+  overflow-x: hidden;
+
 `
 export const LeftSide = styled.div`
   width: 50%;
@@ -19,6 +21,8 @@ export const LeftSide = styled.div`
 export const RightSide = styled.div`
   width: 50%;
   float: left;
+  
+
 `
 
 export const Bottom = styled.div`
@@ -47,5 +51,6 @@ export const Bottom = styled.div`
 
   SmallButton {
     margin-right: 25px;
+    
   }
 `
