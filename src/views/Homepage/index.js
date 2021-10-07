@@ -13,7 +13,7 @@ function Homepage() {
 
   React.useLayoutEffect(() => {
     if (firstUpdate.current) firstUpdate.current = false;
-    else history.push(`/rooms/${sala}`)
+    else history.push(`/rooms/adm/${sala}`)
     
   }, [sala])
 

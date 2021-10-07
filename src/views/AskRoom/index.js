@@ -5,80 +5,78 @@ import * as S from './styles'
 import Header from '../../components/Header'
 import QuestionCard from '../../components/QuestionCard'
 import SmallButton from '../../components/SmallButton'
-import Modal from '../../components/Modal'
+import api from '../../services/Api'
+import { useHistory } from 'react-router'
 
-function AskRoom() {
-  const [showModal, setShowModal] = React.useState(false);
-  const [modalOpt, setModalOpt] = React.useState([]);
+function AskRoom(props) {
+  const [sala, setSala] = React.useState()
+  const [texto, setTexto] = React.useState()
+  const history = useHistory()
 
-  const testFunction = () => {
-    console.log("insira aqui a função do botão");
+
+  const navigateToHomepage = React.useCallback(() => {
+    api.put(`/usuarios/${localStorage.getItem('id_usuario')}`, {id_sala: null})
+    history.push('/')
+  })
+
+  const MINUTE_MS = 1000;
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      const id_sala = props.match.params.code
+    api.get(`/salas/${id_sala}`, {}).then(response => setSala(response.data))
+    }, MINUTE_MS);
+    
+    return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
+  }, [])
+
+  function handleChange(event) {
+    setTexto(event.target.value)
   }
 
-  const openModal = () => {
-    setShowModal(prev => !prev);
+  const handleSubmit = React.useCallback(() => {
+    api.post(`/perguntas`, {id_usuario:localStorage.getItem('id_usuario'), id_sala: props.match.params.code, conteudo:texto})
+  })
+
+  function sortQuestions(questions) {
+    var sortedQuestions = questions.slice().sort(function(a,b){
+      return b.concordaram.length - a.concordaram.length
+    })
+    return sortedQuestions
   }
 
-  const setModalOption = (num) => {
-    setModalOpt(modalOptions[num]);
+  function isVoted(question) {
+    var isVote = false
+    question.concordaram.map(ids => {
+      console.log(ids.id_usuario == localStorage.getItem('id_usuario'))
+      if(ids.id_usuario == localStorage.getItem('id_usuario')) isVote = true
+    })
+    return isVote
   }
-
-  const modalOptions = [
-    {
-      text: "Deseja mesmo limpar estas perguntas?",
-      firstBtnColor: "#379392",
-      firstBtnText: "SIM",
-      firstBtnFunc: testFunction,
-      secndBtnColor: "#E94560",
-      secndBtnText: "NÃO",
-      secndBtnFunc: testFunction,
-    },
-    {
-      text: "XLR8",
-      firstBtnColor: "#379392",
-      firstBtnText: "COPIAR CÓDIGO",
-      firstBtnFunc: testFunction,
-      secndBtnColor: "#379392",
-      secndBtnText: "COPIAR LINK",
-      secndBtnFunc: testFunction,
-    },
-    {
-      text: "Deseja mesmo encerrar a sala?",
-      firstBtnColor: "#379392",
-      firstBtnText: "SIM",
-      firstBtnFunc: testFunction,
-      secndBtnColor: "#E94560",
-      secndBtnText: "NÃO",
-      secndBtnFunc: testFunction,
-    },
-  ];
-
 
   return (
     <S.Container>
-      <Modal showModal={showModal} setShowModal={setShowModal} modalOptions={modalOpt}/>
-      <Header isModerator={false}/>
+      <Header isModerator={false} navigateToHomepage={navigateToHomepage}/>
 
       <S.LeftSide>
         <h1>Perguntas Mais Votadas</h1>
-        <QuestionCard upvotes={"9"} isModerator={false} text={"Você vai viajar para Europa?"} isSmall={true}/>
-        <QuestionCard upvotes={"8"} isModerator={false} text={"Você vai viajar para Ásia?"} isSmall={true}/>
-        <QuestionCard upvotes={"6"} isModerator={false} text={"Você vai viajar para Oceania?"} isSmall={true}/>
-        <QuestionCard upvotes={"4"} isModerator={false} text={"Você vai viajar para Marte?"} isSmall={true}/>
+        {sala ? sortQuestions(sala.perguntas).map(pergunta => {
+          if(!pergunta.is_respondida)
+          return <QuestionCard id={pergunta.id_pergunta} isVoted={isVoted(pergunta)} upvotes={pergunta.concordaram.length} isModerator={false} text={pergunta.conteudo} isSmall={true} />
+        }) : null}
       </S.LeftSide>
 
       <S.RightSide>
         
-        <QuestionCard upvotes={"9"} isModerator={false} text={"Você vai viajar para Europa?"} isSmall={true}/>
-        <QuestionCard upvotes={"8"} isModerator={false} text={"Você vai viajar para Ásia?"} isSmall={true}/>
-        <QuestionCard upvotes={"6"} isModerator={false} text={"Você vai viajar para Oceania?"} isSmall={true}/>
-        <QuestionCard upvotes={"4"} isModerator={false} text={"Você vai viajar para Marte?"} isSmall={true}/>
-        <QuestionCard upvotes={"4"} isModerator={false} text={"Você vai viajar para Marte?"} isSmall={true}/>
+      {sala ? sala.perguntas.map(pergunta => {
+          if(!pergunta.is_respondida)
+          return <QuestionCard id={pergunta.id_pergunta} isVoted={isVoted(pergunta)} upvotes={pergunta.concordaram.length} isModerator={false} text={pergunta.conteudo} isSmall={true} />
+        }) : null}
       </S.RightSide> 
 
       <S.Bottom>
-        <input type="text" placeholder="Digite aqui sua pergunta" />
-        <SmallButton onClick={null} color={'#E94560'} title={'Enviar Pergunta'} />
+        <input type="text" placeholder="Digite aqui sua pergunta" onChange={handleChange} />
+        <SmallButton onClick={handleSubmit} color={'#E94560'} title={'Enviar Pergunta'} />
       </S.Bottom>
 
       
