@@ -6,13 +6,18 @@ import Header from '../../components/Header'
 import QuestionCard from '../../components/QuestionCard'
 import Button from '../../components/Button'
 import Modal from '../../components/Modal'
+import api from '../../services/Api'
+import { useHistory } from 'react-router'
 
-function AnsRoom() {
+function AnsRoom(props) {
   const [showModal, setShowModal] = React.useState(false);
   const [modalOpt, setModalOpt] = React.useState([]);
+  const [update, setUpdate] = React.useState(true);
+  const [sala, setSala] = React.useState()
+  const history = useHistory()
 
   const testFunction = () => {
-    console.log("insira aqui a função do botão");
+    setUpdate(!update)
   }
 
   function copyCodeToClipboard() {
@@ -33,6 +38,29 @@ function AnsRoom() {
     setModalOpt(modalOptions[num]);
   }
 
+  function pergunta(){
+    return sala.perguntas.map(pergunta => {
+      <QuestionCard upvotes={pergunta.concordaram.length} isModerator={true} text={pergunta.conteudo} isSmall={true} />
+    })
+  }
+
+
+  const navigateToHomepage = React.useCallback(() => {
+    api.delete(`/salas/${props.match.params.code}`, {})
+    history.push('/')
+  })
+
+  const MINUTE_MS = 1000;
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      const id_sala = props.match.params.code
+      api.get(`/salas/${id_sala}`, {}).then(response => setSala(response.data))
+    }, MINUTE_MS);
+    
+    return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
+  }, [])
+
   const modalOptions = [
     {
       text: "Deseja mesmo limpar estas perguntas?",
@@ -44,40 +72,30 @@ function AnsRoom() {
       secndBtnFunc: openModal,
     },
     {
-      text: "XLR8",
-      firstBtnColor: "#379392",
-      firstBtnText: "COPIAR CÓDIGO",
+      text: props.match.params.code,
+      firstBtnColor: "#0F3460",
+      firstBtnText: "",
       firstBtnFunc: copyCodeToClipboard,
-      secndBtnColor: "#379392",
-      secndBtnText: "COPIAR LINK",
+      secndBtnColor: "#0F3460",
+      secndBtnText: "",
       secndBtnFunc: copyLinkToClipboard,
     },
-    {
-      text: "Deseja mesmo encerrar a sala?",
-      firstBtnColor: "#379392",
-      firstBtnText: "SIM",
-      firstBtnFunc: testFunction,
-      secndBtnColor: "#E94560",
-      secndBtnText: "NÃO",
-      secndBtnFunc: testFunction,
-    },
   ];
-
 
   return (
     <S.Container>
       <Modal showModal={showModal} setShowModal={setShowModal} modalOptions={modalOpt} />
-      <Header isModerator={true} />
+      <Header isModerator={true} navigateToHomepage={testFunction}/>
 
       <S.LeftSide>
-        <QuestionCard upvotes={"9"} isModerator={true} text={"Você vai viajar para Europa?"} isSmall={true} />
-        <QuestionCard upvotes={"8"} isModerator={true} text={"Você vai viajar para Ásia?"} isSmall={true} />
-        <QuestionCard upvotes={"6"} isModerator={true} text={"Você vai viajar para Oceania?"} isSmall={true} />
-        <QuestionCard upvotes={"4"} isModerator={true} text={"Você vai viajar para Marte?"} isSmall={true} />
+        {sala ? sala.perguntas.map(pergunta => {
+          if(!pergunta.is_respondida)
+          return <QuestionCard onClick={() => { openModal(); setModalOption(0); }} id={pergunta.id_pergunta} upvotes={pergunta.concordaram.length} isModerator={true} text={pergunta.conteudo} isSmall={true} />
+        }) : null}
       </S.LeftSide>
 
       <S.RightSide>
-        <Button color={'#E94560'} title={'LIMPAR PERGUNTAS'} onClick={() => { openModal(); setModalOption(0); }} />
+        {/* <Button color={'#E94560'} title={'LIMPAR PERGUNTAS'} onClick={() => { openModal(); setModalOption(0); }} /> */}
         <Button color={'#379392'} title={'COMPARTILHAR SALA'} onClick={() => { openModal(); setModalOption(1); }} />
       </S.RightSide>
 
