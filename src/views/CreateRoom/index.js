@@ -34,7 +34,7 @@ function CreateRoom() {
         <S.Container>
             <span> Crie uma nova sala </span>
             <input type="text" placeholder="Como deseja ser chamado?" />
-            <input type="text" placeholder="Qual deve ser o nome da sala?" />
+            <input type="text" placeholder="Qual deve ser o nome da sala?" maxlength="24" />
             <SmallButton onClick={createRoom} color={'#E94560'} title={'CRIAR'} />
             <br /><br />
             <SmallButton onClick={navigateToHomepage} color={'#0f3460'} title={'VOLTAR'} />
