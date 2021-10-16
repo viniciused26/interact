@@ -15,7 +15,7 @@ function AskRoom(props) {
 
 
   const navigateToHomepage = React.useCallback(() => {
-    api.put(`/usuarios/${localStorage.getItem('id_usuario')}`, {id_sala: null})
+    api.put(`/usuarios/${localStorage.getItem('id_usuario')}`, { id_sala: null })
     history.push('/')
   })
 
@@ -24,9 +24,9 @@ function AskRoom(props) {
   React.useEffect(() => {
     const interval = setInterval(() => {
       const id_sala = props.match.params.code
-    api.get(`/salas/${id_sala}`, {}).then(response => setSala(response.data))
+      api.get(`/salas/${id_sala}`, {}).then(response => setSala(response.data))
     }, MINUTE_MS);
-    
+
     return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
   }, [])
 
@@ -35,11 +35,11 @@ function AskRoom(props) {
   }
 
   const handleSubmit = React.useCallback(() => {
-    api.post(`/perguntas`, {id_usuario:localStorage.getItem('id_usuario'), id_sala: props.match.params.code, conteudo:texto})
+    api.post(`/perguntas`, { id_usuario: localStorage.getItem('id_usuario'), id_sala: props.match.params.code, conteudo: texto })
   })
 
   function sortQuestions(questions) {
-    var sortedQuestions = questions.slice().sort(function(a,b){
+    var sortedQuestions = questions.slice().sort(function (a, b) {
       return b.concordaram.length - a.concordaram.length
     })
     return sortedQuestions
@@ -49,37 +49,37 @@ function AskRoom(props) {
     var isVote = false
     question.concordaram.map(ids => {
       console.log(ids.id_usuario == localStorage.getItem('id_usuario'))
-      if(ids.id_usuario == localStorage.getItem('id_usuario')) isVote = true
+      if (ids.id_usuario == localStorage.getItem('id_usuario')) isVote = true
     })
     return isVote
   }
 
   return (
     <S.Container>
-      <Header isModerator={false} navigateToHomepage={navigateToHomepage}/>
+      <Header text={"As perguntas apagadas poderiam ser enviadas aqui"} isModerator={false} navigateToHomepage={navigateToHomepage} roomName="Nome da Sala Aqui" />
 
       <S.LeftSide>
         <h1>Perguntas Mais Votadas</h1>
         {sala ? sortQuestions(sala.perguntas).map(pergunta => {
-          if(!pergunta.is_respondida)
-          return <QuestionCard id={pergunta.id_pergunta} isVoted={isVoted(pergunta)} upvotes={pergunta.concordaram.length} isModerator={false} text={pergunta.conteudo} isSmall={true} />
+          if (!pergunta.is_respondida)
+            return <QuestionCard id={pergunta.id_pergunta} isVoted={isVoted(pergunta)} upvotes={pergunta.concordaram.length} isModerator={false} text={pergunta.conteudo} isSmall={true} />
         }) : null}
       </S.LeftSide>
 
       <S.RightSide>
-        
-      {sala ? sala.perguntas.map(pergunta => {
-          if(!pergunta.is_respondida)
-          return <QuestionCard id={pergunta.id_pergunta} isVoted={isVoted(pergunta)} upvotes={pergunta.concordaram.length} isModerator={false} text={pergunta.conteudo} isSmall={true} />
+
+        {sala ? sala.perguntas.map(pergunta => {
+          if (!pergunta.is_respondida)
+            return <QuestionCard id={pergunta.id_pergunta} isVoted={isVoted(pergunta)} upvotes={pergunta.concordaram.length} isModerator={false} text={pergunta.conteudo} isSmall={true} />
         }) : null}
-      </S.RightSide> 
+      </S.RightSide>
 
       <S.Bottom>
         <input type="text" placeholder="Digite aqui sua pergunta" onChange={handleChange} />
         <SmallButton onClick={handleSubmit} color={'#E94560'} title={'Enviar Pergunta'} />
       </S.Bottom>
 
-      
+
 
     </S.Container>
   )

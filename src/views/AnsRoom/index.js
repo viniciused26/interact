@@ -1,7 +1,5 @@
 import React from 'react'
-
 import * as S from './styles'
-
 import Header from '../../components/Header'
 import QuestionCard from '../../components/QuestionCard'
 import Button from '../../components/Button'
@@ -21,12 +19,12 @@ function AnsRoom(props) {
   }
 
   function copyCodeToClipboard() {
-    navigator.clipboard.writeText('XLR8')
+    navigator.clipboard.writeText(props.match.params.code)
     openModal()
   }
 
   function copyLinkToClipboard() {
-    navigator.clipboard.writeText('https://interactfront.herokuapp.com/')
+    navigator.clipboard.writeText("https://interactfront.herokuapp.com/rooms/ask/" + props.match.params.code)
     openModal()
   }
 
@@ -38,7 +36,7 @@ function AnsRoom(props) {
     setModalOpt(modalOptions[num]);
   }
 
-  function pergunta(){
+  function pergunta() {
     return sala.perguntas.map(pergunta => {
       <QuestionCard upvotes={pergunta.concordaram.length} isModerator={true} text={pergunta.conteudo} isSmall={true} />
     })
@@ -57,12 +55,12 @@ function AnsRoom(props) {
       const id_sala = props.match.params.code
       api.get(`/salas/${id_sala}`, {}).then(response => setSala(response.data))
     }, MINUTE_MS);
-    
+
     return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
   }, [])
 
   function sortQuestions(questions) {
-    var sortedQuestions = questions.slice().sort(function(a,b){
+    var sortedQuestions = questions.slice().sort(function (a, b) {
       return b.concordaram.length - a.concordaram.length
     })
     return sortedQuestions
@@ -79,32 +77,33 @@ function AnsRoom(props) {
       secndBtnFunc: openModal,
     },
     {
-      text: props.match.params.code,
-      firstBtnColor: "#0F3460",
-      firstBtnText: "",
+      text: "O código da sala é:  " + props.match.params.code,
+      firstBtnColor: "#379392",
+      firstBtnText: "Copiar código da sala",
       firstBtnFunc: copyCodeToClipboard,
-      secndBtnColor: "#0F3460",
-      secndBtnText: "",
+      secndBtnColor: "#E94560",
+      secndBtnText: "Copiar link da sala",
       secndBtnFunc: copyLinkToClipboard,
     },
+
   ];
 
 
   return (
     <S.Container>
       <Modal showModal={showModal} setShowModal={setShowModal} modalOptions={modalOpt} />
-      <Header isModerator={true} navigateToHomepage={navigateToHomepage}/>
+      <Header text={"As perguntas apagadas poderiam ser enviadas aqui"} isModerator={true} navigateToHomepage={navigateToHomepage} roomName={"Nome da sala Criada aqui"} />
 
       <S.LeftSide>
         {sala ? sortQuestions(sala.perguntas).map(pergunta => {
-          if(!pergunta.is_respondida)
-          return <QuestionCard isVote={pergunta.is_respondida}onClick={() => { openModal(); setModalOption(0); }} id={pergunta.id_pergunta} upvotes={pergunta.concordaram.length} isModerator={true} text={pergunta.conteudo} isSmall={true} />
+          if (!pergunta.is_respondida)
+            return <QuestionCard isVote={pergunta.is_respondida} onClick={() => { openModal(); setModalOption(0); }} id={pergunta.id_pergunta} upvotes={pergunta.concordaram.length} isModerator={true} text={pergunta.conteudo} isSmall={true} />
         }) : null}
       </S.LeftSide>
 
       <S.RightSide>
-        {/* <Button color={'#E94560'} title={'LIMPAR PERGUNTAS'} onClick={() => { openModal(); setModalOption(0); }} /> */}
         <Button color={'#379392'} title={'COMPARTILHAR SALA'} onClick={() => { openModal(); setModalOption(1); }} />
+        {/*<Button color={'#E94560'} title={'HISTÓRICO DE PERGUNTAS'} onClick={() => { openModal(); setModalOption(0); }} />*/}
       </S.RightSide>
 
 
