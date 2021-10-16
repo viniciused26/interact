@@ -53,13 +53,16 @@ function Header(props) {
         <img src={logo} alt="Logo" />
       </S.LeftSide>
 
+      <S.Middle>
+        <span>Nome da Sala Aqui</span>
+      </S.Middle>
+
       <S.RightSide>
         <button onClick={() => { openModal(); setModalOption(props.isModerator == false ? 1 : 0); }}>
           {props.isModerator == false ? <img src={leavebtn} alt="Fechar Sala" /> : <img src={closebtn} alt="Fechar Sala" />}
         </button>
       </S.RightSide>
     </S.Container>
-
   )
 }
 

@@ -16,6 +16,20 @@ export const LeftSide = styled.div`
   padding-left: 25px;
 
 `
+export const Middle = styled.div`
+width: 50%;
+height: 80px;
+display: flex;
+justify-content:center;
+
+span {
+  padding-top: 25px;
+  color: #fff;
+  font-size: 30px;
+  font-weight: bold;
+}
+`
+
 export const RightSide = styled.div`
   width: 50%;
   height: 80px;
