@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom'
 import SmallButton from '../../components/SmallButton'
 import api from '../../services/Api'
 
-function Homepage() {
+function EnterRoom() {
   const history = useHistory()
   const [sala, setSala] = React.useState('');
   const [codigo, setCodigo] = React.useState('');
@@ -14,16 +14,15 @@ function Homepage() {
   React.useLayoutEffect(() => {
     if (firstUpdate.current) firstUpdate.current = false;
     else {
-      if(localStorage.getItem('id_usuario'))
-        api.put(`/usuarios/${localStorage.getItem('id_usuario')}`, {id_sala: sala})
+      if (localStorage.getItem('id_usuario'))
+        api.put(`/usuarios/${localStorage.getItem('id_usuario')}`, { id_sala: sala })
       else
-        api.post('/usuarios', {id_sala: sala}).then(response => localStorage.setItem('id_usuario', response.data.id_usuario))
+        api.post('/usuarios', { id_sala: sala }).then(response => localStorage.setItem('id_usuario', response.data.id_usuario))
       history.push(`/rooms/ask/${sala}`)
     }
-    
   }, [sala])
 
-  function handleChange(event){
+  function handleChange(event) {
     setCodigo(event.target.value)
   }
 
@@ -33,8 +32,9 @@ function Homepage() {
 
   return (
     <S.Container>
-      <span> Digite o código para entrar em uma sala </span>
-      <input type="text" onChange={handleChange} placeholder="XLR8" />
+      <span> Entre em uma  sala </span>
+      <input type="text" placeholder="Digite o seu nome de usuário" />
+      <input type="text" onChange={handleChange} placeholder="Digite o código da sala" />
       <SmallButton onClick={() => setSala(codigo)} color={'#0F3460'} title={'ENTRAR'} />
       <br />
       <SmallButton onClick={navigateToHomepage} color={'#E94560'} title={'VOLTAR'} />
@@ -42,4 +42,4 @@ function Homepage() {
   )
 }
 
-export default Homepage
+export default EnterRoom
