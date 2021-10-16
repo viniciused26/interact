@@ -1,4 +1,4 @@
-import React, {useRef, useEffect, useCallback} from 'react'
+import React, { useRef, useEffect, useCallback } from 'react'
 import * as S from './styles'
 import { useSpring, animated } from 'react-spring'
 
@@ -13,7 +13,7 @@ function Modal(props) {
       duration: 250
     },
     opacity: props.showModal ? 1 : 0,
-    transform: props.showModal ? `translateY(0%)` : `translateY(-100%)` 
+    transform: props.showModal ? `translateY(0%)` : `translateY(-100%)`
   })
 
   return (
@@ -21,30 +21,32 @@ function Modal(props) {
       {props.showModal ? (
         <S.Background>
           <animated.div style={animation}>
-          <S.ModalWrapper showModal={props.showModal}>
-            
-            <S.Top>
-              <button onClick={()=> props.setShowModal(prev=>!prev)}>
-                <img src={closebtn} alt="Fechar Sala"/>
-              </button>
-            </S.Top>
+            <S.ModalWrapper showModal={props.showModal}>
 
-            <S.Middle>
-              <span>{props.modalOptions.text}</span>
-            </S.Middle>
+              <S.Top>
+                <span>{props.modalOptions.textTitle}</span>
 
-            <S.Bottom>
-              <Button color={props.modalOptions.firstBtnColor} title={props.modalOptions.firstBtnText} onClick={props.modalOptions.firstBtnFunc}/>
-              <Button color={props.modalOptions.secndBtnColor} title={props.modalOptions.secndBtnText} onClick={props.modalOptions.secndBtnFunc}/>
-            </S.Bottom>
-          
-          </S.ModalWrapper>
+                <button onClick={() => props.setShowModal(prev => !prev)}>
+                  <img src={closebtn} alt="Fechar Sala" />
+                </button>
+              </S.Top>
+
+              <S.Middle>
+                <span>{props.modalOptions.text}</span>
+              </S.Middle>
+
+              <S.Bottom>
+                <Button color={props.modalOptions.firstBtnColor} title={props.modalOptions.firstBtnText} onClick={props.modalOptions.firstBtnFunc} />
+                <Button color={props.modalOptions.secndBtnColor} title={props.modalOptions.secndBtnText} onClick={props.modalOptions.secndBtnFunc} />
+              </S.Bottom>
+
+            </S.ModalWrapper>
           </animated.div>
         </S.Background>
       ) : null
       }
     </div>
-    
+
   )
 }
 
