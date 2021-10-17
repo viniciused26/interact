@@ -97,7 +97,7 @@ function AnsRoom(props) {
       <S.LeftSide>
         {sala ? sortQuestions(sala.perguntas).map(pergunta => {
           if (!pergunta.is_respondida)
-            return <QuestionCard isVote={pergunta.is_respondida} onClick={() => { openModal(); setModalOption(0); }} id={pergunta.id_pergunta} upvotes={pergunta.concordaram.length} isModerator={true} text={pergunta.conteudo} isSmall={true} />
+            return <QuestionCard name={"Adicionar o Nome Aqui"} isVote={pergunta.is_respondida} onClick={() => { openModal(); setModalOption(0); }} id={pergunta.id_pergunta} upvotes={pergunta.concordaram.length} isModerator={true} text={pergunta.conteudo} isSmall={true} />
         }) : null}
       </S.LeftSide>
 

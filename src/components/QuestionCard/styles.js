@@ -1,16 +1,16 @@
 import styled from 'styled-components'
 
 export const Container = styled.div`
+`
+
+export const BottomSide = styled.div`
   width: ${props => props.width};
   height: 70px;
   background: #0f3460;
-  border-top: 30px solid #379392;
   border-bottom-right-radius: 20px;
   border-bottom-left-radius: 20px;
 
   margin-left: 100px;
-  margin-top: 30px;
-
   display: flex;
 
   span {
@@ -19,6 +19,28 @@ export const Container = styled.div`
     font-size: 20px;
   }
 `
+export const TopSide = styled.div`
+
+  width: ${props => props.width};
+
+  height: 30px;
+  background: #379392;
+  margin-top: 30px;
+
+  margin-left: 100px;
+  display: flex;
+
+  span {
+    display:flex;
+    align-items: center;
+    padding-left: 25px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+  }
+
+`
+
 export const LeftSide = styled.div`
   width: 80%;
   height: 80px;
