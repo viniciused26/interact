@@ -14,10 +14,6 @@ function Header(props) {
 
   const history = useHistory()
 
-  function navigateToHomepage() {
-    history.push('/')
-  }
-
   const openModal = () => {
     setShowModal(prev => !prev);
   }

@@ -92,12 +92,12 @@ function AnsRoom(props) {
   return (
     <S.Container>
       <Modal showModal={showModal} setShowModal={setShowModal} modalOptions={modalOpt} />
-      <Header text={"As perguntas apagadas poderiam ser enviadas aqui"} isModerator={true} navigateToHomepage={navigateToHomepage} roomName={"Nome da sala Criada aqui"} />
+      <Header text={"As perguntas apagadas poderiam ser enviadas aqui"} isModerator={true} navigateToHomepage={navigateToHomepage} roomName={"Nome da Sala Aqui"} />
 
       <S.LeftSide>
         {sala ? sortQuestions(sala.perguntas).map(pergunta => {
           if (!pergunta.is_respondida)
-            return <QuestionCard name={"Adicionar o Nome Aqui"} isVote={pergunta.is_respondida} onClick={() => { openModal(); setModalOption(0); }} id={pergunta.id_pergunta} upvotes={pergunta.concordaram.length} isModerator={true} text={pergunta.conteudo} isSmall={true} />
+            return <QuestionCard name={"Nome do usuário Aqui"} isVote={pergunta.is_respondida} onClick={() => { openModal(); setModalOption(0); }} id={pergunta.id_pergunta} upvotes={pergunta.concordaram.length} isModerator={true} text={pergunta.conteudo} isSmall={true} />
         }) : null}
       </S.LeftSide>
 

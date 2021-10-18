@@ -44,11 +44,6 @@ export const RightSide = styled.div`
     height: 50px;
   }
 
-  imgHitory{
-    width:50px;
-    height: 50px;
-  }
-
   button{
     background-color: transparent;
     border: none;

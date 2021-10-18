@@ -6,9 +6,13 @@ import readButtonFalse from '../../assets/readButtonFalse.png'
 import readButtonTrue from '../../assets/readButtonTrue.png'
 import upvoteButtonFalse from '../../assets/upvoteButtonFalse.png'
 import upvoteButtonTrue from '../../assets/upvoteButtonTrue.png'
+import banButton from '../../assets/banButton.png'
+import Modal from '../../components/Modal'
 import api from '../../services/Api'
 
 function QuestionCard(props) {
+  const [showModal, setShowModal] = React.useState(false);
+  const [modalOpt, setModalOpt] = React.useState([]);
   const [isClicked, setIsClicked] = React.useState(props.is_respondida)
   const [pergunta, setPergunta] = React.useState()
   const [idUsuario, setidUsuario] = React.useState()
@@ -41,21 +45,57 @@ function QuestionCard(props) {
     }
   }, [pergunta])
 
+  const openModal = () => {
+    setShowModal(prev => !prev);
+  }
+
+  const setModalOption = (num) => {
+    setModalOpt(modalOptions[num]);
+  }
+
+  const banUser = () => {
+    ///Adicionar funcao que apaga o usuário do back aqui
+  }
+
+  const modalOptions = [
+    {
+      text: "Tem certeza que gostaria de banir usuário : Tal",
+      firstBtnColor: "#379392",
+      firstBtnText: "Copiar código da sala",
+      firstBtnFunc: banUser,
+      secndBtnColor: "#E94560",
+      secndBtnText: "Copiar link da sala",
+      secndBtnFunc: openModal,
+    },
+  ];
 
   return (
-    <S.Container>
 
-      <S.TopSide width={props.isSmall == false ? '950px' : '80%'}>
-        <span> {props.name}</span>
+    <S.Container>
+      <Modal showModal={showModal} setShowModal={setShowModal} modalOptions={modalOpt} />
+
+      <S.TopSide width={props.isSmall == false ? '950px' : '80%'} >
+
+        <S.TopLeftSide>
+          <span>{props.name}</span>
+        </S.TopLeftSide>
+
+        <S.TopRightSide>
+          <button onClick={() => { openModal(); setModalOption(0); }}  >
+            {props.isModerator == true ? (
+              <img src={banButton} alt="Banir participante" />
+            ) : ""}
+          </button>
+
+        </S.TopRightSide>
       </S.TopSide>
 
       <S.BottomSide width={props.isSmall == false ? '950px' : '80%'} >
-
-        <S.LeftSide>
+        <S.BottomLeftSide>
           <span>{props.text}</span>
-        </S.LeftSide>
+        </S.BottomLeftSide>
 
-        <S.RightSide>
+        <S.BottomRightSide>
           <button
             onClick={() => isClicked ?
               setIsClicked(false) : setIsClicked(true)} >
@@ -72,7 +112,7 @@ function QuestionCard(props) {
             )}
           </button>
           <span>{props.upvotes}</span>
-        </S.RightSide>
+        </S.BottomRightSide>
 
       </S.BottomSide>
 

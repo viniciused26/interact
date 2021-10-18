@@ -62,7 +62,7 @@ function AskRoom(props) {
         <h1>Perguntas Mais Votadas</h1>
         {sala ? sortQuestions(sala.perguntas).map(pergunta => {
           if (!pergunta.is_respondida)
-            return <QuestionCard name={"Adicionar o Nome Aqui"} id={pergunta.id_pergunta} isVoted={isVoted(pergunta)} upvotes={pergunta.concordaram.length} isModerator={false} text={pergunta.conteudo} isSmall={true} />
+            return <QuestionCard name={"Nome do usuário Aqui"} id={pergunta.id_pergunta} isVoted={isVoted(pergunta)} upvotes={pergunta.concordaram.length} isModerator={false} text={pergunta.conteudo} isSmall={true} />
         }) : null}
       </S.LeftSide>
 
@@ -70,7 +70,7 @@ function AskRoom(props) {
 
         {sala ? sala.perguntas.map(pergunta => {
           if (!pergunta.is_respondida)
-            return <QuestionCard name={"Adicionar o Nome Aqui"} id={pergunta.id_pergunta} isVoted={isVoted(pergunta)} upvotes={pergunta.concordaram.length} isModerator={false} text={pergunta.conteudo} isSmall={true} />
+            return <QuestionCard name={"Nome do usuário Aqui"} id={pergunta.id_pergunta} isVoted={isVoted(pergunta)} upvotes={pergunta.concordaram.length} isModerator={false} text={pergunta.conteudo} isSmall={true} />
         }) : null}
       </S.RightSide>
 
