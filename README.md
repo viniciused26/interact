@@ -1,3 +1,23 @@
+InterAct
+Aplicação desenvolvida por estudantes da univerisdade de brasília para a disciplina requisitos de software.
+
+Para realizar a execução do front-end do projeto:
+$  yarn install  
+Para instalar todas as dependências
+
+$  yarn dev
+Para rodar a aplicação
+
+Aplicação no heroku:
+https://interactfront.herokuapp.com/
+
+O Backend do InterAct encontrasse no link:
+https://github.com/oEduardoAfonso/InterAct-Backend
+
+
+
+
+<!--
 Para rodar a aplicação
 
 Estando na pasta do dockerfile, que seria app, use o comando:
@@ -20,7 +40,7 @@ no localhost:3000 vai estar a aplicação
 Site da aplicação:
 
 https://intteract.herokuapp.com/
-
+--!>
 <!--
 # Getting Started with Create React App
 
