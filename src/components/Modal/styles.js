@@ -50,15 +50,17 @@ export const ModalWrapper = styled.div`
 
 export const Top = styled.div`
   display: flex;
-  justify-content: flex-end;
   align-items: center;
-  padding-right: 15px;
-
   height: 20%;
+justify-content: flex-end;
 
-  img{
-    width: 50px;
-    height: 50px;
+  span{
+    padding-right: 190px;
+    align-items: center;
+    font-size: 30px;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
   }
 
   button{
@@ -69,6 +71,11 @@ export const Top = styled.div`
     &:not(:disabled):hover {
       filter: brightness(0.9);
     }
+
+  img{
+    width: 50px;
+    height: 50px;
+  }
 
     &:disabled {
       opacity: 0.6;

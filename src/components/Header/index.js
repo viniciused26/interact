@@ -4,6 +4,7 @@ import * as S from './styles'
 import logo from '../../assets/logo.png'
 import closebtn from '../../assets/closeButton.png'
 import leavebtn from '../../assets/leaveButton.png'
+import historicbtn from '../../assets/historicButton.png'
 import Modal from '../../components/Modal'
 import { useHistory } from 'react-router-dom'
 
@@ -12,10 +13,6 @@ function Header(props) {
   const [modalOpt, setModalOpt] = React.useState([]);
 
   const history = useHistory()
-
-  function navigateToHomepage() {
-    history.push('/')
-  }
 
   const openModal = () => {
     setShowModal(prev => !prev);
@@ -43,7 +40,12 @@ function Header(props) {
       secndBtnColor: "#E94560",
       secndBtnText: "NÃO",
       secndBtnFunc: openModal,
+    },
+    {
+      textTitle: "Histórico de Perguntas",
+      text: props.text,
     }
+
   ];
 
   return (
@@ -53,13 +55,19 @@ function Header(props) {
         <img src={logo} alt="Logo" />
       </S.LeftSide>
 
+      <S.Middle>
+        <span> {props.roomName}</span>
+      </S.Middle>
+
       <S.RightSide>
+        <button onClick={() => { openModal(); setModalOption(2) }} >
+          <img src={historicbtn} alt="Abrir historico" />  </button>
+
         <button onClick={() => { openModal(); setModalOption(props.isModerator == false ? 1 : 0); }}>
           {props.isModerator == false ? <img src={leavebtn} alt="Fechar Sala" /> : <img src={closebtn} alt="Fechar Sala" />}
         </button>
       </S.RightSide>
     </S.Container>
-
   )
 }
 
