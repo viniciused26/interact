@@ -39,9 +39,9 @@ function AnsRoom(props) {
   }
 
   function pergunta(){
-    return sala.perguntas.map(pergunta => {
+    return sala.perguntas.map(pergunta => 
       <QuestionCard upvotes={pergunta.concordaram.length} isModerator={true} text={pergunta.conteudo} isSmall={true} />
-    })
+    )
   }
 
 
