@@ -53,10 +53,13 @@ function AskRoom(props) {
     })
     return isVote
   }
-
+  
   return (
     <S.Container>
-      <Header text={"As perguntas apagadas poderiam ser enviadas aqui"} isModerator={false} navigateToHomepage={navigateToHomepage} roomName="Nome da Sala Aqui" />
+      <Header height='400px' text={sala ? sala.perguntas.map(pergunta => {
+          if (pergunta.is_respondida)
+            return <QuestionCard name={"Nome do usuário Aqui"} id={pergunta.id_pergunta} isVoted={isVoted(pergunta)} upvotes={pergunta.concordaram.length} isModerator={false} text={pergunta.conteudo} isSmall={true} />
+        }) : null} isModerator={false} navigateToHomepage={navigateToHomepage} roomName="Nome da Sala Aqui" />
 
       <S.LeftSide>
         <h1>Perguntas Mais Votadas</h1>

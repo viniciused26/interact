@@ -52,7 +52,7 @@ export const Top = styled.div`
   display: flex;
   align-items: center;
   height: 20%;
-justify-content: flex-end;
+  justify-content: flex-end;
 
   span{
     padding-right: 190px;
@@ -85,11 +85,11 @@ justify-content: flex-end;
 `
 export const Middle = styled.div`
   width: 100%;
-  height: 40%;
+  height: ${props => props.height};
   display: flex;
   align-items: center;
   justify-content: center;
-
+  
   img{
     width: 50px;
     height: 50px;
@@ -111,11 +111,19 @@ export const Middle = styled.div`
   }
 
   span {
+    width: 100%;
+    height: 80%;
     color: #fff;
     font-weight: bold;
     font-size: 25px;
     font-weight: bold;
+    overflow-y: auto;
+    button{ 
+      display: none;
+    }
   }
+
+
 `
 export const Bottom = styled.div`
   display: flex;

@@ -31,7 +31,7 @@ function Modal(props) {
                 </button>
               </S.Top>
 
-              <S.Middle>
+              <S.Middle height={props.modalOptions.height}>
                 <span>{props.modalOptions.text}</span>
               </S.Middle>
 

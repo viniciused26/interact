@@ -24,7 +24,7 @@ function Header(props) {
 
   const modalOptions = [
     {
-      text: "Deseja mesmo encerrar a sala?",
+      textTitle: "Deseja mesmo encerrar a sala?",
       firstBtnColor: "#379392",
       firstBtnText: "SIM",
       firstBtnFunc: props.navigateToHomepage,
@@ -33,7 +33,7 @@ function Header(props) {
       secndBtnFunc: openModal,
     },
     {
-      text: "Deseja mesmo sair da sala?",
+      textTitle: "Deseja mesmo sair da sala?",
       firstBtnColor: "#379392",
       firstBtnText: "SIM",
       firstBtnFunc: props.navigateToHomepage,
@@ -44,6 +44,7 @@ function Header(props) {
     {
       textTitle: "Histórico de Perguntas",
       text: props.text,
+      height: props.height
     }
 
   ];
