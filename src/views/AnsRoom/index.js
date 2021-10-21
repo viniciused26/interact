@@ -74,7 +74,7 @@ function AnsRoom(props) {
 
   const modalOptions = [
     {
-      text: 'Deseja mesmo limpar estas perguntas?',
+      textTitle: 'Deseja mesmo limpar estas perguntas?',
       firstBtnColor: '#379392',
       firstBtnText: 'SIM',
       firstBtnFunc: testFunction,
@@ -83,7 +83,7 @@ function AnsRoom(props) {
       secndBtnFunc: openModal
     },
     {
-      text: 'O código da sala é:  ' + props.match.params.code,
+      textTitle: 'O código da sala é:  ' + props.match.params.code,
       firstBtnColor: '#379392',
       firstBtnText: 'Copiar código da sala',
       firstBtnFunc: copyCodeToClipboard,
@@ -101,7 +101,23 @@ function AnsRoom(props) {
         modalOptions={modalOpt}
       />
       <Header
-        text={'As perguntas apagadas poderiam ser enviadas aqui'}
+        height='400px'
+        text={sala
+          ? sala.perguntas.map(pergunta => {
+              if (pergunta.is_respondida)
+                return (
+                  <QuestionCard
+                    name={'Nome do usuário Aqui'}
+                    isVote={pergunta.is_respondida}
+                    id={pergunta.id_pergunta}
+                    upvotes={pergunta.concordaram.length}
+                    isModerator={true}
+                    text={pergunta.conteudo}
+                    isSmall={true}
+                  />
+                )
+            })
+          : null}
         isModerator={true}
         navigateToHomepage={navigateToHomepage}
         roomName={'Nome da Sala Aqui'}
