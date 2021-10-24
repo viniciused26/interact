@@ -5,11 +5,22 @@ export const Container = styled.div`
   height: 100vh;
   background-color: #1a1a2e;
   overflow-x: hidden;
-
 `
 export const LeftSide = styled.div`
   width: 50%;
   float: left;
+  #rectangle {
+    text-align: center;
+    font-size: 30px;
+    color: white;
+    margin-top: 35px;
+    margin-left: 60px;
+    margin-botton: 40px;
+    width: 350px;
+    height: 50px;
+    background: #e94560;
+    border-radius: 20px;
+  }
 
   h1 {
     text-align: center;
@@ -21,8 +32,6 @@ export const LeftSide = styled.div`
 export const RightSide = styled.div`
   width: 50%;
   float: left;
-  
-
 `
 
 export const Bottom = styled.div`
@@ -51,6 +60,5 @@ export const Bottom = styled.div`
 
   SmallButton {
     margin-right: 25px;
-    
   }
 `
