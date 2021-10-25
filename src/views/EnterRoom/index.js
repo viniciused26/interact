@@ -8,6 +8,7 @@ import api from '../../services/Api'
 function EnterRoom() {
   const history = useHistory()
   const [sala, setSala] = React.useState('');
+  const [username, setUsername] = React.useState('');
   const [codigo, setCodigo] = React.useState('');
   const firstUpdate = React.useRef(true);
 
@@ -17,12 +18,17 @@ function EnterRoom() {
       if (localStorage.getItem('id_usuario'))
         api.put(`/usuarios/${localStorage.getItem('id_usuario')}`, { id_sala: sala })
       else
-        api.post('/usuarios', { id_sala: sala }).then(response => localStorage.setItem('id_usuario', response.data.id_usuario))
+        api.post('/usuarios', { nome_usuario: username, id_sala: sala }).then(response => localStorage.setItem('id_usuario', response.data.id_usuario))
       history.push(`/rooms/ask/${sala}`)
     }
+
   }, [sala])
 
-  function handleChange(event) {
+  function handleUserameChange(event) {
+    setUsername(event.target.value)
+  }
+
+  function handleCodeChange(event) {
     setCodigo(event.target.value)
   }
 
@@ -33,8 +39,8 @@ function EnterRoom() {
   return (
     <S.Container>
       <span> Entre em uma  sala </span>
-      <input type="text" placeholder="Digite o seu nome de usuário" />
-      <input type="text" onChange={handleChange} placeholder="Digite o código da sala" />
+      <input type="text" onChange={handleUserameChange} placeholder="Digite o seu nome de usuário" />
+      <input type="text" onChange={handleCodeChange} placeholder="Digite o código da sala" />
       <SmallButton onClick={() => setSala(codigo)} color={'#0F3460'} title={'ENTRAR'} />
       <br />
       <SmallButton onClick={navigateToHomepage} color={'#E94560'} title={'VOLTAR'} />
