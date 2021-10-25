@@ -11,15 +11,17 @@ import io from 'socket.io-client'
 
 
 function AskRoom(props) {
-  const [idSala, setIDSala] = React.useState()
+  const [idSala, setIdSala] = React.useState(props.match.params.code)
   const [sala, setSala] = React.useState()
+  const [perguntas, setPerguntas] = React.useState()
   const [texto, setTexto] = React.useState('')
   const [conect, setConect] = React.useState(false)
   const history = useHistory()
   const socket = io(api.defaults.baseURL)
 
-  if(!conect){
-    
+  if (!conect) {
+
+    console.log(idSala)
     socket.on('connect', () => { console.log('Conectado!!') })
     setConect(true)
   }
@@ -31,8 +33,19 @@ function AskRoom(props) {
   }
 
   React.useEffect(() => {
-    setIDSala(props.match.params.code)
-    api.get(`/salas/${idSala}`, {}).then(response => setSala(response.data))
+    if (idSala) {
+      api.get(`/salas/${idSala}`, {}).then(response => {
+        setSala(response.data)
+        setPerguntas(response.data.perguntas)
+      })
+    }
+  }, [idSala])
+
+  React.useEffect(() => {
+    socket.on('recebe.perguntas', (perguntas) => {
+      setPerguntas(perguntas)
+      console.log(perguntas)
+    })
   }, [])
 
   function handleChange(event) {
@@ -49,7 +62,6 @@ function AskRoom(props) {
       })
 
       setTexto('')
-      socket.on('recebe.pergunta', () => api.get(`/salas/${idSala}`, {}).then(response => setSala(response.data)))
     }
   }
 
@@ -79,8 +91,8 @@ function AskRoom(props) {
         height="400px"
         background="#24364D"
         text={
-          sala
-            ? sala.perguntas.map((pergunta) => {
+          perguntas
+            ? perguntas.map((pergunta) => {
                 if (pergunta.is_respondida)
                   return (
                     <QuestionCard
@@ -106,8 +118,8 @@ function AskRoom(props) {
         <span>Host: Nome</span>
       </S.HostName>
       <S.LeftSide>
-        {sala
-          ? sortQuestions(sala.perguntas).map((pergunta) => {
+        {perguntas
+          ? sortQuestions(perguntas).map((pergunta) => {
               if (!pergunta.is_respondida)
                 return (
                   <QuestionCard
@@ -125,8 +137,8 @@ function AskRoom(props) {
       </S.LeftSide>
 
       <S.RightSide>
-        {sala
-          ? sala.perguntas.map((pergunta) => {
+        {perguntas
+          ? perguntas.map((pergunta) => {
               if (!pergunta.is_respondida)
                 return (
                   <QuestionCard
