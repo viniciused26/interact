@@ -53,13 +53,17 @@ function AskRoom(props) {
     })
     return isVote
   }
-  
+
+  function clearField() {
+    document.getElementById('messageBar').value = "";
+  }
+
   return (
     <S.Container>
       <Header height='400px' text={sala ? sala.perguntas.map(pergunta => {
-          if (pergunta.is_respondida)
-            return <QuestionCard name={"Nome do usuário Aqui"} id={pergunta.id_pergunta} isVoted={isVoted(pergunta)} upvotes={pergunta.concordaram.length} isModerator={false} text={pergunta.conteudo} isSmall={true} />
-        }) : null} isModerator={false} navigateToHomepage={navigateToHomepage} roomName="Nome da Sala Aqui" />
+        if (pergunta.is_respondida)
+          return <QuestionCard name={"Nome do usuário Aqui"} id={pergunta.id_pergunta} isVoted={isVoted(pergunta)} upvotes={pergunta.concordaram.length} isModerator={false} text={pergunta.conteudo} isSmall={true} />
+      }) : null} isModerator={false} navigateToHomepage={navigateToHomepage} roomName="Nome da Sala Aqui" />
 
       <S.LeftSide>
         <h1>Perguntas Mais Votadas</h1>
@@ -78,8 +82,8 @@ function AskRoom(props) {
       </S.RightSide>
 
       <S.Bottom>
-        <input type="text" placeholder="Digite aqui sua pergunta" onChange={handleChange} />
-        <SmallButton onClick={handleSubmit} color={'#E94560'} title={'Enviar Pergunta'} />
+        <input id="messageBar" type="text" placeholder="Digite aqui sua pergunta" onChange={handleChange} />
+        <SmallButton onClick={() => { handleSubmit(); clearField(); }} color={'#E94560'} title={'Enviar Pergunta'} />
       </S.Bottom>
 
 
