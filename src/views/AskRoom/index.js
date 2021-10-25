@@ -69,6 +69,7 @@ function AskRoom(props) {
     <S.Container>
       <Header
         height="400px"
+        background="#24364D"
         text={
           sala
             ? sala.perguntas.map(pergunta => {
@@ -86,6 +87,16 @@ function AskRoom(props) {
                   )
               })
             : null
+        }
+        checkbox={
+          <>
+          <label>
+          <h4><input type="checkbox" /> 5 segundos</h4>
+          <h4><input type="checkbox" /> 15 segundos</h4>
+          <h4><input type="checkbox" /> 30 segundos</h4>
+          </label>
+          <h3>Tem certeza que deseja alterar o tempo de envio?</h3>
+          </>
         }
         isModerator={false}
         navigateToHomepage={navigateToHomepage}
