@@ -5,6 +5,7 @@ import logo from '../../assets/logo.png'
 import closebtn from '../../assets/closeButton.png'
 import leavebtn from '../../assets/leaveButton.png'
 import historicbtn from '../../assets/historicButton.png'
+import timerbtn from '../../assets/timerButton.jpg'
 import Modal from '../../components/Modal'
 import { useHistory } from 'react-router-dom'
 
@@ -44,9 +45,19 @@ function Header(props) {
     {
       textTitle: "Histórico de Perguntas",
       text: props.text,
-      height: props.height
+      height: props.height,
+      background: props.background
+    },
+    {
+      textTitle: "Cronometro das perguntas",
+      text: props.checkbox,
+      firstBtnColor: "#379392",
+      firstBtnText: "SIM",
+      firstBtnFunc: openModal,
+      secndBtnColor: "#E94560",
+      secndBtnText: "NÃO",
+      secndBtnFunc: openModal,
     }
-
   ];
 
   return (
@@ -61,6 +72,9 @@ function Header(props) {
       </S.Middle>
 
       <S.RightSide>
+        <button onClick={() => { openModal(); setModalOption(3) }}>
+          <img src={timerbtn} alt="Abrir timer"/></button>
+
         <button onClick={() => { openModal(); setModalOption(2) }} >
           <img src={historicbtn} alt="Abrir historico" />  </button>
 

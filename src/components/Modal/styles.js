@@ -19,9 +19,9 @@ export const Background = styled.div`
 
 export const ModalWrapper = styled.div`
   width: 850px;
-  height: 500px;
+  height: fit-content;
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
-  background: #0F3460;
+  background: ${props => props.background};
   color: #000;
   position: relative;
   z-index: 10;
@@ -120,6 +120,15 @@ export const Middle = styled.div`
     overflow-y: auto;
     button{ 
       display: none;
+    }
+    label{
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+
+    h3{
+      margin-left: 55px;
     }
   }
 

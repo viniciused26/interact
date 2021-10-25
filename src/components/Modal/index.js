@@ -21,7 +21,7 @@ function Modal(props) {
       {props.showModal ? (
         <S.Background>
           <animated.div style={animation}>
-            <S.ModalWrapper showModal={props.showModal}>
+            <S.ModalWrapper showModal={props.showModal} background={props.modalOptions.background ? props.modalOptions.background: "#0F3460"}>
 
               <S.Top>
                 <span>{props.modalOptions.textTitle}</span>
@@ -34,11 +34,11 @@ function Modal(props) {
               <S.Middle height={props.modalOptions.height}>
                 <span>{props.modalOptions.text}</span>
               </S.Middle>
-
+              {props.modalOptions.firstBtnColor?
               <S.Bottom>
                 <Button color={props.modalOptions.firstBtnColor} title={props.modalOptions.firstBtnText} onClick={props.modalOptions.firstBtnFunc} />
                 <Button color={props.modalOptions.secndBtnColor} title={props.modalOptions.secndBtnText} onClick={props.modalOptions.secndBtnFunc} />
-              </S.Bottom>
+              </S.Bottom>: null}
 
             </S.ModalWrapper>
           </animated.div>
