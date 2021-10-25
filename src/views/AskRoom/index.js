@@ -9,22 +9,14 @@ import api from '../../services/Api'
 import { useHistory } from 'react-router'
 import io from 'socket.io-client'
 
+const socket = io(api.defaults.baseURL)
 
 function AskRoom(props) {
   const [idSala, setIdSala] = React.useState(props.match.params.code)
   const [sala, setSala] = React.useState()
   const [perguntas, setPerguntas] = React.useState()
   const [texto, setTexto] = React.useState('')
-  const [conect, setConect] = React.useState(false)
   const history = useHistory()
-  const socket = io(api.defaults.baseURL)
-
-  if (!conect) {
-
-    console.log(idSala)
-    socket.on('connect', () => { console.log('Conectado!!') })
-    setConect(true)
-  }
 
   const navigateToHomepage = () => {
     api.delete(`/usuarios/${localStorage.getItem("id_usuario")}`, {});
@@ -44,7 +36,6 @@ function AskRoom(props) {
   React.useEffect(() => {
     socket.on('recebe.perguntas', (perguntas) => {
       setPerguntas(perguntas)
-      console.log(perguntas)
     })
   }, [])
 

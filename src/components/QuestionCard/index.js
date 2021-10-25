@@ -9,6 +9,9 @@ import upvoteButtonTrue from '../../assets/upvoteButtonTrue.png'
 import banButton from '../../assets/banButton.png'
 import Modal from '../../components/Modal'
 import api from '../../services/Api'
+import io from 'socket.io-client'
+
+const socket = io(api.defaults.baseURL)
 
 function QuestionCard(props) {
   const [showModal, setShowModal] = React.useState(false);
@@ -28,6 +31,7 @@ function QuestionCard(props) {
     }
   }, [isClicked])
 
+
   React.useEffect(() => {
     if (firstUpdate.current || !pergunta) firstUpdate.current = false;
     else {
@@ -40,7 +44,11 @@ function QuestionCard(props) {
         }
         ).then(res => console.log(res))
       } else {
-        api.post(`/perguntas/concordar/${props.id}`, { id_usuario: idUsuario }).then(res => console.log(res))
+        socket.emit('concorda.pergunta', {
+          id_usuario: idUsuario,
+          id_sala: pergunta.id_sala,
+          id_pergunta: props.id
+        })
       }
     }
   }, [pergunta])
