@@ -111,7 +111,7 @@ function QuestionCard(props) {
               />
             ) : (
               <img
-                src={isClicked ? readButtonTrue : readButtonFalse}
+                src={readButtonFalse}
                 alt="Fechar Sala"
               />
             )}

@@ -6,8 +6,13 @@ import Button from '../../components/Button'
 import Modal from '../../components/Modal'
 import api from '../../services/Api'
 import { useHistory } from 'react-router'
+import io from 'socket.io-client'
+
+const socket = io(api.defaults.baseURL)
 
 function AnsRoom(props) {
+  const [idSala, setIdSala] = React.useState(props.match.params.code)
+  const [perguntas, setPerguntas] = React.useState()
   const [showModal, setShowModal] = React.useState(false)
   const [modalOpt, setModalOpt] = React.useState([])
   const [update, setUpdate] = React.useState(true)
@@ -25,7 +30,7 @@ function AnsRoom(props) {
 
   function copyLinkToClipboard() {
     navigator.clipboard.writeText(
-      'https://interactfront.herokuapp.com/rooms/ask/' + props.match.params.code
+      api.defaults.baseURL + props.match.params.code
     )
     openModal()
   }
@@ -38,15 +43,42 @@ function AnsRoom(props) {
     setModalOpt(modalOptions[num])
   }
 
-  function pergunta() {
-    return sala.perguntas.map(pergunta => (
-      <QuestionCard
-        upvotes={pergunta.concordaram.length}
-        isModerator={true}
-        text={pergunta.conteudo}
-        isSmall={true}
-      />
-    ))
+  React.useEffect(() => {
+    if (idSala) {
+      api.get(`/salas/${idSala}`, {}).then(response => {
+        setSala(response.data)
+        setPerguntas(response.data.perguntas)
+      })
+    }
+  }, [idSala])
+
+  React.useEffect(() => {
+    socket.on('recebe.perguntas', (perguntas) => {
+      setPerguntas(perguntas)
+    })
+  }, [])
+
+  function pergunta () {
+    var perguntasNaoRespondidas = []
+    sortQuestions(perguntas).map(pergunta => {
+      if (!pergunta.is_respondida)
+      perguntasNaoRespondidas.push(
+          <QuestionCard
+            name={'Nome do usuário Aqui'}
+            isVote={pergunta.is_respondida}
+            onClick={() => {
+              openModal()
+              setModalOption(0)
+            }}
+            id={pergunta.id_pergunta}
+            upvotes={pergunta.concordaram.length}
+            isModerator={true}
+            text={pergunta.conteudo}
+            isSmall={true}
+          />
+        )
+    })
+    return perguntasNaoRespondidas
   }
 
   const navigateToHomepage = React.useCallback(() => {
@@ -56,16 +88,6 @@ function AnsRoom(props) {
     history.push('/')
   })
 
-  const MINUTE_MS = 1000
-
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      const id_sala = props.match.params.code
-      api.get(`/salas/${id_sala}`, {}).then(response => setSala(response.data))
-    }, MINUTE_MS)
-
-    return () => clearInterval(interval) // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
-  }, [])
 
   function sortQuestions(questions) {
     var sortedQuestions = questions.slice().sort(function (a, b) {
@@ -104,8 +126,8 @@ function AnsRoom(props) {
       />
       <Header
         height='400px'
-        text={sala
-          ? sala.perguntas.map(pergunta => {
+        text={perguntas
+          ? perguntas.map(pergunta => {
               if (pergunta.is_respondida)
                 return (
                   <QuestionCard
@@ -126,25 +148,8 @@ function AnsRoom(props) {
       />
 
       <S.LeftSide>
-        {sala
-          ? sortQuestions(sala.perguntas).map(pergunta => {
-              if (!pergunta.is_respondida)
-                return (
-                  <QuestionCard
-                    name={'Nome do usuário Aqui'}
-                    isVote={pergunta.is_respondida}
-                    onClick={() => {
-                      openModal()
-                      setModalOption(0)
-                    }}
-                    id={pergunta.id_pergunta}
-                    upvotes={pergunta.concordaram.length}
-                    isModerator={true}
-                    text={pergunta.conteudo}
-                    isSmall={true}
-                  />
-                )
-            })
+        {perguntas
+          ? pergunta()
           : null}
       </S.LeftSide>
 
