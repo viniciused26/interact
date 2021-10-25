@@ -36,13 +36,10 @@ function QuestionCard(props) {
     if (firstUpdate.current || !pergunta) firstUpdate.current = false;
     else {
       if (props.isModerator) {
-        api.put(`/perguntas/${props.id}`, {
-          conteudo: pergunta.conteudo,
+        socket.emit('ler.pergunta', {
           id_sala: pergunta.id_sala,
-          id_usuario: pergunta.id_usuario,
-          is_respondida: isClicked
-        }
-        ).then(res => console.log(res))
+          id_pergunta: props.id
+        })
       } else {
         socket.emit('concorda.pergunta', {
           id_usuario: idUsuario,

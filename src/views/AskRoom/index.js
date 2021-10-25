@@ -64,16 +64,11 @@ function AskRoom(props) {
   }
 
   function isVoted(question) {
-    var isVote = false;
-    question.concordaram.map((ids) => {
-      console.log(ids.id_usuario == localStorage.getItem("id_usuario"));
-      if (ids.id_usuario == localStorage.getItem("id_usuario")) isVote = true;
-    });
-    return isVote;
-  }
-
-  function clearField() {
-    document.getElementById("messageBar").value = "";
+    var isVote = false
+    question.concordaram.map(ids => {
+      if (ids.id_usuario == localStorage.getItem('id_usuario')) isVote = true
+    })
+    return isVote
   }
 
   return (
