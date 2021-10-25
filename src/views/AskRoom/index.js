@@ -17,6 +17,8 @@ function AskRoom(props) {
     api.put(`/usuarios/${localStorage.getItem('id_usuario')}`, {
       id_sala: null
     })
+    api.delete(`/usuarios/${localStorage.getItem('id_usuario')}`, {})
+    localStorage.removeItem('id_usuario')
     history.push('/')
   })
 

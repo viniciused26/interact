@@ -51,6 +51,8 @@ function AnsRoom(props) {
 
   const navigateToHomepage = React.useCallback(() => {
     api.delete(`/salas/${props.match.params.code}`, {})
+    api.delete(`/usuarios/${localStorage.getItem('id_usuario')}`, {})
+    localStorage.removeItem('id_usuario')
     history.push('/')
   })
 
