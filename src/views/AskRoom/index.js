@@ -2,51 +2,56 @@ import React from "react";
 
 import * as S from "./styles";
 
-import Header from "../../components/Header";
-import QuestionCard from "../../components/QuestionCard";
-import SmallButton from "../../components/SmallButton";
-import api from "../../services/Api";
-import { useHistory } from "react-router";
-import Button from "../../components/Button";
+import Header from '../../components/Header'
+import QuestionCard from '../../components/QuestionCard'
+import SmallButton from '../../components/SmallButton'
+import api from '../../services/Api'
+import { useHistory } from 'react-router'
+import io from 'socket.io-client'
+
 
 function AskRoom(props) {
-  const [sala, setSala] = React.useState();
-  const [texto, setTexto] = React.useState();
-  const history = useHistory();
+  const [idSala, setIDSala] = React.useState()
+  const [sala, setSala] = React.useState()
+  const [texto, setTexto] = React.useState('')
+  const [conect, setConect] = React.useState(false)
+  const history = useHistory()
+  const socket = io(api.defaults.baseURL)
 
-  const navigateToHomepage = React.useCallback(() => {
-    api.put(`/usuarios/${localStorage.getItem("id_usuario")}`, {
-      id_sala: null,
-    });
+  if(!conect){
+    
+    socket.on('connect', () => { console.log('Conectado!!') })
+    setConect(true)
+  }
+
+  const navigateToHomepage = () => {
     api.delete(`/usuarios/${localStorage.getItem("id_usuario")}`, {});
     localStorage.removeItem("id_usuario");
-    history.push("/");
-  });
-
-  const MINUTE_MS = 1000;
+    history.push('/')
+  }
 
   React.useEffect(() => {
-    const interval = setInterval(() => {
-      const id_sala = props.match.params.code;
-      api
-        .get(`/salas/${id_sala}`, {})
-        .then((response) => setSala(response.data));
-    }, MINUTE_MS);
-
-    return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
-  }, [MINUTE_MS]);
+    setIDSala(props.match.params.code)
+    api.get(`/salas/${idSala}`, {}).then(response => setSala(response.data))
+  }, [])
 
   function handleChange(event) {
     setTexto(event.target.value);
   }
 
-  const handleSubmit = React.useCallback(() => {
-    api.post(`/perguntas`, {
-      id_usuario: localStorage.getItem("id_usuario"),
-      id_sala: props.match.params.code,
-      conteudo: texto,
-    });
-  });
+  const handleSubmit = event => {
+    event.preventDefault()
+    if (texto.trim()) {
+      socket.emit('envia.pergunta', {
+        id_usuario: localStorage.getItem('id_usuario'),
+        id_sala: props.match.params.code,
+        conteudo: texto
+      })
+
+      setTexto('')
+      socket.on('recebe.pergunta', () => api.get(`/salas/${idSala}`, {}).then(response => setSala(response.data)))
+    }
+  }
 
   function sortQuestions(questions) {
     var sortedQuestions = questions.slice().sort(function (a, b) {
@@ -146,10 +151,7 @@ function AskRoom(props) {
           onChange={handleChange}
         />
         <SmallButton
-          onClick={() => {
-            handleSubmit();
-            clearField();
-          }}
+          onClick={handleSubmit}
           color={"#E94560"}
           title={"Enviar Pergunta"}
         />
