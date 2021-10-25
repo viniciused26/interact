@@ -5,7 +5,7 @@ import logo from '../../assets/logo.png'
 import closebtn from '../../assets/closeButton.png'
 import leavebtn from '../../assets/leaveButton.png'
 import historicbtn from '../../assets/historicButton.png'
-import timerbtn from '../../assets/timerButton.jpg'
+import timerbtn from '../../assets/timerButton.png'
 import Modal from '../../components/Modal'
 import { useHistory } from 'react-router-dom'
 
@@ -73,7 +73,7 @@ function Header(props) {
 
       <S.RightSide>
         <button onClick={() => { openModal(); setModalOption(3) }}>
-          <img src={timerbtn} alt="Abrir timer"/></button>
+          <img src={timerbtn} alt="Abrir timer" /></button>
 
         <button onClick={() => { openModal(); setModalOption(2) }} >
           <img src={historicbtn} alt="Abrir historico" />  </button>
