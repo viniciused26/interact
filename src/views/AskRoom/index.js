@@ -91,9 +91,9 @@ function AskRoom(props) {
         navigateToHomepage={navigateToHomepage}
         roomName="Nome da Sala Aqui"
       />
-
+      <S.HostName>Nome do host</S.HostName>
       <S.LeftSide>
-        <div id="rectangle">Nome do host</div>
+        
         {sala
           ? sortQuestions(sala.perguntas).map(pergunta => {
               if (!pergunta.is_respondida)
