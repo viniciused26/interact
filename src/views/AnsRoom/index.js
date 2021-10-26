@@ -31,7 +31,7 @@ function AnsRoom(props) {
 
   function copyLinkToClipboard() {
     navigator.clipboard.writeText(
-      api.defaults.baseURL + props.match.params.code
+      api.defaults.baseURL + 'rooms/ask/' + props.match.params.code
     )
     openModal()
   }
@@ -90,12 +90,12 @@ function AnsRoom(props) {
     return perguntasNaoRespondidas
   }
 
-  const navigateToHomepage = React.useCallback(() => {
+  const navigateToHomepage = () => {
     api.delete(`/salas/${props.match.params.code}`, {})
     api.delete(`/usuarios/${localStorage.getItem('id_usuario')}`, {})
     localStorage.removeItem('id_usuario')
     history.push('/')
-  })
+  }
 
 
   function sortQuestions(questions) {

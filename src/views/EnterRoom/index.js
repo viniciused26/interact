@@ -15,10 +15,8 @@ function EnterRoom() {
   React.useLayoutEffect(() => {
     if (firstUpdate.current) firstUpdate.current = false;
     else {
-      if (localStorage.getItem('id_usuario'))
-        api.put(`/usuarios/${localStorage.getItem('id_usuario')}`, { id_sala: sala })
-      else
-        api.post('/usuarios', { nome_usuario: username, id_sala: sala }).then(response => localStorage.setItem('id_usuario', response.data.id_usuario))
+      localStorage.removeItem("id_usuario");
+      api.post('/usuarios', { nome_usuario: username, id_sala: sala }).then(response => localStorage.setItem('id_usuario', response.data.id_usuario))
       history.push(`/rooms/ask/${sala}`)
     }
 
