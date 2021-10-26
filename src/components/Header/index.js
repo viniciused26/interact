@@ -50,13 +50,8 @@ function Header(props) {
     },
     {
       textTitle: "Cronometro das perguntas",
-      text: props.checkbox,
-      firstBtnColor: "#379392",
-      firstBtnText: "SIM",
-      firstBtnFunc: openModal,
-      secndBtnColor: "#E94560",
-      secndBtnText: "NÃO",
-      secndBtnFunc: openModal,
+      text: props.time,
+      
     }
   ];
 

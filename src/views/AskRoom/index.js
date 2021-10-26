@@ -1,68 +1,71 @@
-import React from 'react'
+import React from "react";
 
-import * as S from './styles'
+import * as S from "./styles";
 
-import Header from '../../components/Header'
-import QuestionCard from '../../components/QuestionCard'
-import SmallButton from '../../components/SmallButton'
-import api from '../../services/Api'
-import { useHistory } from 'react-router'
+import Header from "../../components/Header";
+import QuestionCard from "../../components/QuestionCard";
+import SmallButton from "../../components/SmallButton";
+import api from "../../services/Api";
+import { useHistory } from "react-router";
+import Button from "../../components/Button";
 
 function AskRoom(props) {
-  const [sala, setSala] = React.useState()
-  const [texto, setTexto] = React.useState()
-  const history = useHistory()
+  const [sala, setSala] = React.useState();
+  const [texto, setTexto] = React.useState();
+  const history = useHistory();
 
   const navigateToHomepage = React.useCallback(() => {
-    api.put(`/usuarios/${localStorage.getItem('id_usuario')}`, {
-      id_sala: null
-    })
-    api.delete(`/usuarios/${localStorage.getItem('id_usuario')}`, {})
-    localStorage.removeItem('id_usuario')
-    history.push('/')
-  })
+    api.put(`/usuarios/${localStorage.getItem("id_usuario")}`, {
+      id_sala: null,
+    });
+    api.delete(`/usuarios/${localStorage.getItem("id_usuario")}`, {});
+    localStorage.removeItem("id_usuario");
+    history.push("/");
+  });
 
-  const MINUTE_MS = 1000
+  const MINUTE_MS = 1000;
 
   React.useEffect(() => {
     const interval = setInterval(() => {
-      const id_sala = props.match.params.code
-      api.get(`/salas/${id_sala}`, {}).then(response => setSala(response.data))
-    }, MINUTE_MS)
+      const id_sala = props.match.params.code;
+      api
+        .get(`/salas/${id_sala}`, {})
+        .then((response) => setSala(response.data));
+    }, MINUTE_MS);
 
-    return () => clearInterval(interval) // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
-  }, [])
+    return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
+  }, [MINUTE_MS]);
 
   function handleChange(event) {
-    setTexto(event.target.value)
+    setTexto(event.target.value);
   }
 
   const handleSubmit = React.useCallback(() => {
     api.post(`/perguntas`, {
-      id_usuario: localStorage.getItem('id_usuario'),
+      id_usuario: localStorage.getItem("id_usuario"),
       id_sala: props.match.params.code,
-      conteudo: texto
-    })
-  })
+      conteudo: texto,
+    });
+  });
 
   function sortQuestions(questions) {
     var sortedQuestions = questions.slice().sort(function (a, b) {
-      return b.concordaram.length - a.concordaram.length
-    })
-    return sortedQuestions
+      return b.concordaram.length - a.concordaram.length;
+    });
+    return sortedQuestions;
   }
 
   function isVoted(question) {
-    var isVote = false
-    question.concordaram.map(ids => {
-      console.log(ids.id_usuario == localStorage.getItem('id_usuario'))
-      if (ids.id_usuario == localStorage.getItem('id_usuario')) isVote = true
-    })
-    return isVote
+    var isVote = false;
+    question.concordaram.map((ids) => {
+      console.log(ids.id_usuario == localStorage.getItem("id_usuario"));
+      if (ids.id_usuario == localStorage.getItem("id_usuario")) isVote = true;
+    });
+    return isVote;
   }
 
   function clearField() {
-    document.getElementById('messageBar').value = ''
+    document.getElementById("messageBar").value = "";
   }
 
   return (
@@ -72,11 +75,63 @@ function AskRoom(props) {
         background="#24364D"
         text={
           sala
-            ? sala.perguntas.map(pergunta => {
-              if (pergunta.is_respondida)
+            ? sala.perguntas.map((pergunta) => {
+                if (pergunta.is_respondida)
+                  return (
+                    <QuestionCard
+                      name={"Nome do usuário Aqui"}
+                      id={pergunta.id_pergunta}
+                      isVoted={isVoted(pergunta)}
+                      upvotes={pergunta.concordaram.length}
+                      isModerator={false}
+                      text={pergunta.conteudo}
+                      isSmall={true}
+                    />
+                  );
+              })
+            : null
+        }
+        time={
+          <>
+            <h3>Selecione o tempo de intervalo de envio de uma mensagem</h3>
+            <label>
+              <Button
+                title="5 segundos"
+                color="#379392"
+                width="230px"
+                height="60px"
+                margin="20px"
+                //onClick={() => }
+              />
+              <Button
+                title="15 segundos"
+                color="#379392"
+                width="230px"
+                height="60px"
+                margin="20px"
+              />
+              <Button
+                title="30 segundos"
+                color="#379392"
+                width="230px"
+                height="60px"
+                margin="20px"
+              />
+            </label>
+          </>
+        }
+        isModerator={false}
+        navigateToHomepage={navigateToHomepage}
+        roomName="Nome da Sala Aqui"
+      />
+      <S.HostName><span>Host: Nome</span></S.HostName>
+      <S.LeftSide>
+        {sala
+          ? sortQuestions(sala.perguntas).map((pergunta) => {
+              if (!pergunta.is_respondida)
                 return (
                   <QuestionCard
-                    name={'Nome do usuário Aqui'}
+                    name={"Nome do usuário Aqui"}
                     id={pergunta.id_pergunta}
                     isVoted={isVoted(pergunta)}
                     upvotes={pergunta.concordaram.length}
@@ -84,63 +139,27 @@ function AskRoom(props) {
                     text={pergunta.conteudo}
                     isSmall={true}
                   />
-                )
+                );
             })
-            : null
-        }
-        checkbox={
-          <>
-            <label>
-              <h4><input type="checkbox" /> 5 segundos</h4>
-              <h4><input type="checkbox" /> 15 segundos</h4>
-              <h4><input type="checkbox" /> 30 segundos</h4>
-            </label>
-            <h3>Tem certeza que deseja alterar o tempo de envio?</h3>
-          </>
-        }
-        isModerator={false}
-        navigateToHomepage={navigateToHomepage}
-        roomName="Nome da Sala Aqui"
-      />
-      <S.HostName>
-        <span>Host: Nome</span>
-      </S.HostName>
-      <S.LeftSide>
-
-        {sala
-          ? sortQuestions(sala.perguntas).map(pergunta => {
-            if (!pergunta.is_respondida)
-              return (
-                <QuestionCard
-                  name={'Nome do usuário Aqui'}
-                  id={pergunta.id_pergunta}
-                  isVoted={isVoted(pergunta)}
-                  upvotes={pergunta.concordaram.length}
-                  isModerator={false}
-                  text={pergunta.conteudo}
-                  isSmall={true}
-                />
-              )
-          })
           : null}
       </S.LeftSide>
 
       <S.RightSide>
         {sala
-          ? sala.perguntas.map(pergunta => {
-            if (!pergunta.is_respondida)
-              return (
-                <QuestionCard
-                  name={'Nome do usuário Aqui'}
-                  id={pergunta.id_pergunta}
-                  isVoted={isVoted(pergunta)}
-                  upvotes={pergunta.concordaram.length}
-                  isModerator={false}
-                  text={pergunta.conteudo}
-                  isSmall={true}
-                />
-              )
-          })
+          ? sala.perguntas.map((pergunta) => {
+              if (!pergunta.is_respondida)
+                return (
+                  <QuestionCard
+                    name={"Nome do usuário Aqui"}
+                    id={pergunta.id_pergunta}
+                    isVoted={isVoted(pergunta)}
+                    upvotes={pergunta.concordaram.length}
+                    isModerator={false}
+                    text={pergunta.conteudo}
+                    isSmall={true}
+                  />
+                );
+            })
           : null}
       </S.RightSide>
 
@@ -153,15 +172,15 @@ function AskRoom(props) {
         />
         <SmallButton
           onClick={() => {
-            handleSubmit()
-            clearField()
+            handleSubmit();
+            clearField();
           }}
-          color={'#E94560'}
-          title={'Enviar Pergunta'}
+          color={"#E94560"}
+          title={"Enviar Pergunta"}
         />
       </S.Bottom>
     </S.Container>
-  )
+  );
 }
 
-export default AskRoom
+export default AskRoom;
