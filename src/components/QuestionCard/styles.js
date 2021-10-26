@@ -50,14 +50,12 @@ button {
       cursor: not-allowed;
     }
   }
-}
 
   img {
     align-items: center;
     width: 28px;
     height: 28px;
   }
-
 `
 
 export const BottomSide = styled.div`

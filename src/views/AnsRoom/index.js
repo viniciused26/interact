@@ -135,6 +135,7 @@ function AnsRoom(props) {
       />
       <Header
         height='400px'
+        background="#24364D"
         text={perguntas
           ? perguntas.map(pergunta => {
               if (pergunta.is_respondida)
@@ -151,6 +152,8 @@ function AnsRoom(props) {
                 )
             })
           : null}
+        time={<h3>Selecione o tempo de intervalo de envio de uma mensagem</h3>}
+        isTimer={true}
         isModerator={true}
         navigateToHomepage={navigateToHomepage}
         roomName={'Nome da Sala Aqui'}

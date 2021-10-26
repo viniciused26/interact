@@ -68,9 +68,11 @@ function Header(props) {
       </S.Middle>
 
       <S.RightSide>
-        <button onClick={() => { openModal(); setModalOption(3) }}>
-          <img src={timerbtn} alt="Abrir timer" /></button>
-
+        {props.isTimer? 
+          <button onClick={() => { openModal(); setModalOption(3) }}>
+            <img src={timerbtn} alt="Abrir timer" /></button>
+        : null}
+        
         <button onClick={() => { openModal(); setModalOption(2) }} >
           <img src={historicbtn} alt="Abrir historico" />  </button>
 

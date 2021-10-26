@@ -98,11 +98,11 @@ function QuestionCard(props) {
         </S.TopLeftSide>
 
         <S.TopRightSide>
-          <button onClick={() => { openModal(); setModalOption(0); }}  >
             {props.isModerator == true ? (
-              <img src={banButton} alt="Banir participante" />
+              <button onClick={() => { openModal(); setModalOption(0); }}  >
+                <img src={banButton} alt="Banir participante" />
+              </button>
             ) : ""}
-          </button>
 
         </S.TopRightSide>
       </S.TopSide>

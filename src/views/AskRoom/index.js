@@ -100,8 +100,6 @@ function AskRoom(props) {
               })
             : null
         }
-        time={<h3>Selecione o tempo de intervalo de envio de uma mensagem</h3>}
-        isTimer={true}
         isModerator={false}
         navigateToHomepage={navigateToHomepage}
         roomName="Nome da Sala Aqui"
