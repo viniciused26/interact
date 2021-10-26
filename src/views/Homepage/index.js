@@ -2,7 +2,6 @@ import React from 'react'
 import * as S from './styles'
 import { useHistory } from 'react-router-dom'
 import Button from '../../components/Button'
-import api from '../../services/Api';
 
 function Homepage() {
   const history = useHistory()

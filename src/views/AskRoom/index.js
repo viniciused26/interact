@@ -2,51 +2,68 @@ import React from "react";
 
 import * as S from "./styles";
 
-import Header from "../../components/Header";
-import QuestionCard from "../../components/QuestionCard";
-import SmallButton from "../../components/SmallButton";
-import api from "../../services/Api";
-import { useHistory } from "react-router";
-import Button from "../../components/Button";
+import Header from '../../components/Header'
+import QuestionCard from '../../components/QuestionCard'
+import SmallButton from '../../components/SmallButton'
+import api from '../../services/Api'
+import { useHistory } from 'react-router'
+import io from 'socket.io-client'
+
+const socket = io(api.defaults.baseURL)
 
 function AskRoom(props) {
-  const [sala, setSala] = React.useState();
-  const [texto, setTexto] = React.useState();
-  const history = useHistory();
+  const [idSala, setIdSala] = React.useState(props.match.params.code)
+  const [sala, setSala] = React.useState()
+  const [perguntas, setPerguntas] = React.useState()
+  const [banidos, setBanidos] = React.useState()
+  const [texto, setTexto] = React.useState('')
+  const history = useHistory()
 
-  const navigateToHomepage = React.useCallback(() => {
-    api.put(`/usuarios/${localStorage.getItem("id_usuario")}`, {
-      id_sala: null,
-    });
+  const navigateToHomepage = () => {
     api.delete(`/usuarios/${localStorage.getItem("id_usuario")}`, {});
     localStorage.removeItem("id_usuario");
-    history.push("/");
-  });
-
-  const MINUTE_MS = 1000;
+    history.push('/')
+  }
 
   React.useEffect(() => {
-    const interval = setInterval(() => {
-      const id_sala = props.match.params.code;
-      api
-        .get(`/salas/${id_sala}`, {})
-        .then((response) => setSala(response.data));
-    }, MINUTE_MS);
+    if (idSala) {
+      api.get(`/salas/${idSala}`, {}).then(response => {
+        setSala(response.data)
+        setPerguntas(response.data.perguntas)
+        setBanidos(response.data.banidos)
+      })
+    }
+  }, [idSala])
 
-    return () => clearInterval(interval); // This represents the unmount function, in which you need to clear your interval to prevent memory leaks.
-  }, [MINUTE_MS]);
+  React.useEffect(() => {
+    socket.on('recebe.perguntas', (perguntas) => {
+      setPerguntas(perguntas)
+    })
+  }, [])
+
+  React.useEffect(() => {
+    socket.on('recebe.banidos', (banidos) => {
+      setBanidos(banidos)
+      console.log(banidos)
+    })
+  }, [])
 
   function handleChange(event) {
     setTexto(event.target.value);
   }
 
-  const handleSubmit = React.useCallback(() => {
-    api.post(`/perguntas`, {
-      id_usuario: localStorage.getItem("id_usuario"),
-      id_sala: props.match.params.code,
-      conteudo: texto,
-    });
-  });
+  const handleSubmit = event => {
+    event.preventDefault()
+    if (texto.trim()) {
+      socket.emit('envia.pergunta', {
+        id_usuario: localStorage.getItem('id_usuario'),
+        id_sala: props.match.params.code,
+        conteudo: texto
+      })
+
+      setTexto('')
+    }
+  }
 
   function sortQuestions(questions) {
     var sortedQuestions = questions.slice().sort(function (a, b) {
@@ -55,17 +72,9 @@ function AskRoom(props) {
     return sortedQuestions;
   }
 
-  function isVoted(question) {
-    var isVote = false;
-    question.concordaram.map((ids) => {
-      console.log(ids.id_usuario == localStorage.getItem("id_usuario"));
-      if (ids.id_usuario == localStorage.getItem("id_usuario")) isVote = true;
-    });
-    return isVote;
-  }
-
-  function clearField() {
-    document.getElementById("messageBar").value = "";
+  function isVoted(pergunta) {
+    const is_concordado = pergunta.concordaram.find(el => el.id_usuario = localStorage.getItem('id_usuario'))
+    return is_concordado != null
   }
 
   return (
@@ -74,8 +83,8 @@ function AskRoom(props) {
         height="400px"
         background="#24364D"
         text={
-          sala
-            ? sala.perguntas.map((pergunta) => {
+          perguntas
+            ? perguntas.map((pergunta) => {
                 if (pergunta.is_respondida)
                   return (
                     <QuestionCard
@@ -101,8 +110,8 @@ function AskRoom(props) {
         <span>Host: Nome</span>
       </S.HostName>
       <S.LeftSide>
-        {sala
-          ? sortQuestions(sala.perguntas).map((pergunta) => {
+        {perguntas
+          ? sortQuestions(perguntas).map((pergunta) => {
               if (!pergunta.is_respondida)
                 return (
                   <QuestionCard
@@ -120,8 +129,8 @@ function AskRoom(props) {
       </S.LeftSide>
 
       <S.RightSide>
-        {sala
-          ? sala.perguntas.map((pergunta) => {
+        {perguntas
+          ? perguntas.map((pergunta) => {
               if (!pergunta.is_respondida)
                 return (
                   <QuestionCard
@@ -143,13 +152,11 @@ function AskRoom(props) {
           id="messageBar"
           type="text"
           placeholder="Digite aqui sua pergunta"
+          value={texto}
           onChange={handleChange}
         />
         <SmallButton
-          onClick={() => {
-            handleSubmit();
-            clearField();
-          }}
+          onClick={handleSubmit}
           color={"#E94560"}
           title={"Enviar Pergunta"}
         />
