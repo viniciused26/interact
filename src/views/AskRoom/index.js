@@ -73,72 +73,74 @@ function AskRoom(props) {
         text={
           sala
             ? sala.perguntas.map(pergunta => {
-                if (pergunta.is_respondida)
-                  return (
-                    <QuestionCard
-                      name={'Nome do usuário Aqui'}
-                      id={pergunta.id_pergunta}
-                      isVoted={isVoted(pergunta)}
-                      upvotes={pergunta.concordaram.length}
-                      isModerator={false}
-                      text={pergunta.conteudo}
-                      isSmall={true}
-                    />
-                  )
-              })
+              if (pergunta.is_respondida)
+                return (
+                  <QuestionCard
+                    name={'Nome do usuário Aqui'}
+                    id={pergunta.id_pergunta}
+                    isVoted={isVoted(pergunta)}
+                    upvotes={pergunta.concordaram.length}
+                    isModerator={false}
+                    text={pergunta.conteudo}
+                    isSmall={true}
+                  />
+                )
+            })
             : null
         }
         checkbox={
           <>
-          <label>
-          <h4><input type="checkbox" /> 5 segundos</h4>
-          <h4><input type="checkbox" /> 15 segundos</h4>
-          <h4><input type="checkbox" /> 30 segundos</h4>
-          </label>
-          <h3>Tem certeza que deseja alterar o tempo de envio?</h3>
+            <label>
+              <h4><input type="checkbox" /> 5 segundos</h4>
+              <h4><input type="checkbox" /> 15 segundos</h4>
+              <h4><input type="checkbox" /> 30 segundos</h4>
+            </label>
+            <h3>Tem certeza que deseja alterar o tempo de envio?</h3>
           </>
         }
         isModerator={false}
         navigateToHomepage={navigateToHomepage}
         roomName="Nome da Sala Aqui"
       />
-      <S.HostName>Nome do host</S.HostName>
+      <S.HostName>
+        <span>Host: Nome</span>
+      </S.HostName>
       <S.LeftSide>
-        
+
         {sala
           ? sortQuestions(sala.perguntas).map(pergunta => {
-              if (!pergunta.is_respondida)
-                return (
-                  <QuestionCard
-                    name={'Nome do usuário Aqui'}
-                    id={pergunta.id_pergunta}
-                    isVoted={isVoted(pergunta)}
-                    upvotes={pergunta.concordaram.length}
-                    isModerator={false}
-                    text={pergunta.conteudo}
-                    isSmall={true}
-                  />
-                )
-            })
+            if (!pergunta.is_respondida)
+              return (
+                <QuestionCard
+                  name={'Nome do usuário Aqui'}
+                  id={pergunta.id_pergunta}
+                  isVoted={isVoted(pergunta)}
+                  upvotes={pergunta.concordaram.length}
+                  isModerator={false}
+                  text={pergunta.conteudo}
+                  isSmall={true}
+                />
+              )
+          })
           : null}
       </S.LeftSide>
 
       <S.RightSide>
         {sala
           ? sala.perguntas.map(pergunta => {
-              if (!pergunta.is_respondida)
-                return (
-                  <QuestionCard
-                    name={'Nome do usuário Aqui'}
-                    id={pergunta.id_pergunta}
-                    isVoted={isVoted(pergunta)}
-                    upvotes={pergunta.concordaram.length}
-                    isModerator={false}
-                    text={pergunta.conteudo}
-                    isSmall={true}
-                  />
-                )
-            })
+            if (!pergunta.is_respondida)
+              return (
+                <QuestionCard
+                  name={'Nome do usuário Aqui'}
+                  id={pergunta.id_pergunta}
+                  isVoted={isVoted(pergunta)}
+                  upvotes={pergunta.concordaram.length}
+                  isModerator={false}
+                  text={pergunta.conteudo}
+                  isSmall={true}
+                />
+              )
+          })
           : null}
       </S.RightSide>
 

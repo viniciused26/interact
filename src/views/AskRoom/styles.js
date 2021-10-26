@@ -6,17 +6,25 @@ export const Container = styled.div`
   background-color: #1a1a2e;
   overflow-x: hidden;
 `
-export const HostName =styled.div`
+export const HostName = styled.div`
   text-align: center;
   font-size: 30px;
   color: white;
   margin-top: 35px;
-  margin-left: 60px;
-  margin-botton: 40px;
+  margin-left: 100px;
   width: 350px;
   height: 50px;
   background: #e94560;
   border-radius: 20px;
+
+  span{
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    padding-top: 8px;
+    padding-left: 25px;
+  }
+
 `
 
 export const LeftSide = styled.div`
