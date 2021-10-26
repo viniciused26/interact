@@ -121,12 +121,6 @@ export const Middle = styled.div`
     button{ 
       display: none;
     }
-    label{
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-    
-    }
 
     h3{
       margin-left: 55px;

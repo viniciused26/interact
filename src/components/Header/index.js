@@ -51,7 +51,8 @@ function Header(props) {
     {
       textTitle: "Cronometro das perguntas",
       text: props.time,
-      
+      isTimer: props.isTimer,
+      closeModel: openModal
     }
   ];
 

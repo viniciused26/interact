@@ -91,40 +91,15 @@ function AskRoom(props) {
               })
             : null
         }
-        time={
-          <>
-            <h3>Selecione o tempo de intervalo de envio de uma mensagem</h3>
-            <label>
-              <Button
-                title="5 segundos"
-                color="#379392"
-                width="230px"
-                height="60px"
-                margin="20px"
-                //onClick={() => }
-              />
-              <Button
-                title="15 segundos"
-                color="#379392"
-                width="230px"
-                height="60px"
-                margin="20px"
-              />
-              <Button
-                title="30 segundos"
-                color="#379392"
-                width="230px"
-                height="60px"
-                margin="20px"
-              />
-            </label>
-          </>
-        }
+        time={<h3>Selecione o tempo de intervalo de envio de uma mensagem</h3>}
+        isTimer={true}
         isModerator={false}
         navigateToHomepage={navigateToHomepage}
         roomName="Nome da Sala Aqui"
       />
-      <S.HostName><span>Host: Nome</span></S.HostName>
+      <S.HostName>
+        <span>Host: Nome</span>
+      </S.HostName>
       <S.LeftSide>
         {sala
           ? sortQuestions(sala.perguntas).map((pergunta) => {
