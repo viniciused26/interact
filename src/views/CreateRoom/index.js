@@ -3,6 +3,7 @@ import * as S from './styles'
 import { useHistory } from 'react-router-dom'
 import SmallButton from '../../components/SmallButton'
 import api from '../../services/Api'
+import logo from '../../assets/logoGrande.png'
 
 function CreateRoom() {
     const history = useHistory()
@@ -35,6 +36,7 @@ function CreateRoom() {
 
     return (
         <S.Container>
+            <img src={logo} alt="Logo" />
             <span> Crie uma nova sala </span>
             <input type="text" onChange={handleUserameChange} placeholder="Como deseja ser chamado?" />
             <input type="text" placeholder="Qual deve ser o nome da sala?" maxlength="24" />

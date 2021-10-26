@@ -22,6 +22,14 @@ export const LeftSide = styled.div`
     font-size: 20px;
     font-weight: bold;
   }
+
+  img {
+    position: absolute;
+    display: flex;
+    height: 90px;
+    top: 50px;
+    left: 40px;    
+  }
 `
 
 export const RightSide = styled.div`

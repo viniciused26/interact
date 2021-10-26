@@ -1,9 +1,9 @@
 import React from 'react'
 import * as S from './styles'
 import { useHistory } from 'react-router-dom'
-
 import SmallButton from '../../components/SmallButton'
 import api from '../../services/Api'
+import logo from '../../assets/logoGrande.png'
 
 function EnterRoom() {
   const history = useHistory()
@@ -36,6 +36,7 @@ function EnterRoom() {
 
   return (
     <S.Container>
+      <img src={logo} alt="Logo" />
       <span> Entre em uma  sala </span>
       <input type="text" onChange={handleUserameChange} placeholder="Digite o seu nome de usuário" />
       <input type="text" onChange={handleCodeChange} placeholder="Digite o código da sala" />

@@ -2,6 +2,7 @@ import React from 'react'
 import * as S from './styles'
 import { useHistory } from 'react-router-dom'
 import Button from '../../components/Button'
+import logo from '../../assets/logoGrande.png'
 
 function Homepage() {
   const history = useHistory()
@@ -16,7 +17,9 @@ function Homepage() {
 
   return (
     <S.Container>
+
       <S.LeftSide>
+        <img src={logo} alt="Logo" />
         <Button onClick={navigateToCreateRoom} color={'#E94560'} title={'CRIAR'} />
         <span>
           Crie uma sala para seus espectadores <br /> interagirem com você!
