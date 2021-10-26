@@ -88,7 +88,10 @@ function AskRoom(props) {
                 if (pergunta.is_respondida)
                   return (
                     <QuestionCard
-                      name={"Nome do usuário Aqui"}
+                      name={sala.participantes.map(nome => {
+                        if(pergunta.id_usuario === nome.id_usuario){
+                          return nome.nome_usuario}
+                      })}
                       id={pergunta.id_pergunta}
                       isVoted={isVoted(pergunta)}
                       upvotes={pergunta.concordaram.length}
@@ -105,7 +108,10 @@ function AskRoom(props) {
         roomName="Nome da Sala Aqui"
       />
       <S.HostName>
-        <span>Host: Nome</span>
+        <span>Host: {sala ? sala.participantes.map(nome => {
+              if(sala.id_moderador === nome.id_usuario){
+                return nome.nome_usuario}
+            }): null}</span>
       </S.HostName>
       <S.LeftSide>
         {perguntas
@@ -113,7 +119,10 @@ function AskRoom(props) {
               if (!pergunta.is_respondida)
                 return (
                   <QuestionCard
-                    name={"Nome do usuário Aqui"}
+                    name={sala.participantes.map(nome => {
+                      if(pergunta.id_usuario === nome.id_usuario){
+                        return nome.nome_usuario}
+                    })}
                     id={pergunta.id_pergunta}
                     isVoted={isVoted(pergunta)}
                     upvotes={pergunta.concordaram.length}
@@ -132,7 +141,10 @@ function AskRoom(props) {
               if (!pergunta.is_respondida)
                 return (
                   <QuestionCard
-                    name={"Nome do usuário Aqui"}
+                    name={sala.participantes.map(nome => {
+                      if(pergunta.id_usuario === nome.id_usuario){
+                        return nome.nome_usuario}
+                    })}
                     id={pergunta.id_pergunta}
                     isVoted={isVoted(pergunta)}
                     upvotes={pergunta.concordaram.length}

@@ -73,7 +73,10 @@ function AnsRoom(props) {
       if (!pergunta.is_respondida)
       perguntasNaoRespondidas.push(
           <QuestionCard
-            name={'Nome do usuário Aqui'}
+            name={sala.participantes.map(nome => {
+              if(pergunta.id_usuario === nome.id_usuario){
+                return nome.nome_usuario}
+            })}
             isVote={pergunta.is_respondida}
             onClick={() => {
               openModal()
@@ -125,7 +128,7 @@ function AnsRoom(props) {
       secndBtnFunc: copyLinkToClipboard
     }
   ]
-
+  
   return (
     <S.Container>
       <Modal
@@ -141,7 +144,10 @@ function AnsRoom(props) {
               if (pergunta.is_respondida)
                 return (
                   <QuestionCard
-                    name={'Nome do usuário Aqui'}
+                    name={sala.participantes.map(nome => {
+                      if(pergunta.id_usuario === nome.id_usuario){
+                        return nome.nome_usuario}
+                    })}
                     isVote={pergunta.is_respondida}
                     id={pergunta.id_pergunta}
                     upvotes={pergunta.concordaram.length}
