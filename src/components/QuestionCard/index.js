@@ -16,7 +16,8 @@ const socket = io(api.defaults.baseURL)
 function QuestionCard(props) {
   const [showModal, setShowModal] = React.useState(false);
   const [modalOpt, setModalOpt] = React.useState([]);
-  const [isClicked, setIsClicked] = React.useState(props.is_respondida)
+  const [isClicked, setIsClicked] = React.useState(props.isVoted)
+  const [idPergunta, setIdPergunta] = React.useState(props.id)
   const [pergunta, setPergunta] = React.useState()
   const [idUsuario, setidUsuario] = React.useState()
   const firstUpdate = React.useRef(true);
@@ -31,10 +32,16 @@ function QuestionCard(props) {
     }
   }, [isClicked])
 
-
   React.useEffect(() => {
-    if (firstUpdate.current || !pergunta) firstUpdate.current = false;
-    else {
+    if (idPergunta) {
+      api.get(`/perguntas/${props.id}`, {}).then(response => {
+        setPergunta(response.data)
+      })
+    }
+  }, [idPergunta])
+
+
+    const handleClick = () => {
       if (props.isModerator) {
         socket.emit('ler.pergunta', {
           id_sala: pergunta.id_sala,
@@ -47,10 +54,11 @@ function QuestionCard(props) {
           id_pergunta: props.id
         })
       }
+    setIsClicked(!isClicked)
     }
-  }, [pergunta])
 
   const openModal = () => {
+    api.get(`/perguntas/${props.id}`, {}).then(response => setPergunta(response.data))
     setShowModal(prev => !prev);
   }
 
@@ -59,18 +67,22 @@ function QuestionCard(props) {
   }
 
   const banUser = () => {
-    ///Adicionar funcao que apaga o usuário do back aqui
+    socket.emit('envia.banido', {
+      id_sala: pergunta.id_sala,
+      id_usuario: pergunta.id_usuario
+    })
+    openModal()
   }
 
   const modalOptions = [
     {
       text: "Tem certeza que gostaria de banir usuário : Tal",
       firstBtnColor: "#379392",
-      firstBtnText: "Copiar código da sala",
-      firstBtnFunc: banUser,
+      firstBtnText: "Perdoar",
+      firstBtnFunc: openModal,
       secndBtnColor: "#E94560",
-      secndBtnText: "Copiar link da sala",
-      secndBtnFunc: openModal,
+      secndBtnText: "Banir",
+      secndBtnFunc: banUser,
     },
   ];
 
@@ -102,17 +114,16 @@ function QuestionCard(props) {
 
         <S.BottomRightSide>
           <button
-            onClick={() => isClicked ?
-              setIsClicked(false) : setIsClicked(true)} >
+            onClick={handleClick} >
             {props.isModerator == false ? (
               <img
                 src={isClicked ? upvoteButtonTrue : upvoteButtonFalse}
-                alt="Fechar Sala"
+                alt="Concordar"
               />
             ) : (
               <img
                 src={readButtonFalse}
-                alt="Fechar Sala"
+                alt="Marcar como lida"
               />
             )}
           </button>

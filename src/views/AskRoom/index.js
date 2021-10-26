@@ -15,6 +15,7 @@ function AskRoom(props) {
   const [idSala, setIdSala] = React.useState(props.match.params.code)
   const [sala, setSala] = React.useState()
   const [perguntas, setPerguntas] = React.useState()
+  const [banidos, setBanidos] = React.useState()
   const [texto, setTexto] = React.useState('')
   const history = useHistory()
 
@@ -29,6 +30,7 @@ function AskRoom(props) {
       api.get(`/salas/${idSala}`, {}).then(response => {
         setSala(response.data)
         setPerguntas(response.data.perguntas)
+        setBanidos(response.data.banidos)
       })
     }
   }, [idSala])
@@ -36,6 +38,13 @@ function AskRoom(props) {
   React.useEffect(() => {
     socket.on('recebe.perguntas', (perguntas) => {
       setPerguntas(perguntas)
+    })
+  }, [])
+
+  React.useEffect(() => {
+    socket.on('recebe.banidos', (banidos) => {
+      setBanidos(banidos)
+      console.log(banidos)
     })
   }, [])
 
@@ -63,12 +72,9 @@ function AskRoom(props) {
     return sortedQuestions;
   }
 
-  function isVoted(question) {
-    var isVote = false
-    question.concordaram.map(ids => {
-      if (ids.id_usuario == localStorage.getItem('id_usuario')) isVote = true
-    })
-    return isVote
+  function isVoted(pergunta) {
+    const is_concordado = pergunta.concordaram.find(el => el.id_usuario = localStorage.getItem('id_usuario'))
+    return is_concordado != null
   }
 
   return (
@@ -146,6 +152,7 @@ function AskRoom(props) {
           id="messageBar"
           type="text"
           placeholder="Digite aqui sua pergunta"
+          value={texto}
           onChange={handleChange}
         />
         <SmallButton

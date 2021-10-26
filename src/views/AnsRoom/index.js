@@ -13,6 +13,7 @@ const socket = io(api.defaults.baseURL)
 function AnsRoom(props) {
   const [idSala, setIdSala] = React.useState(props.match.params.code)
   const [perguntas, setPerguntas] = React.useState()
+  const [banidos, setBanidos] = React.useState()
   const [showModal, setShowModal] = React.useState(false)
   const [modalOpt, setModalOpt] = React.useState([])
   const [update, setUpdate] = React.useState(true)
@@ -48,6 +49,7 @@ function AnsRoom(props) {
       api.get(`/salas/${idSala}`, {}).then(response => {
         setSala(response.data)
         setPerguntas(response.data.perguntas)
+        setBanidos(response.data.banidos)
       })
     }
   }, [idSala])
@@ -55,6 +57,13 @@ function AnsRoom(props) {
   React.useEffect(() => {
     socket.on('recebe.perguntas', (perguntas) => {
       setPerguntas(perguntas)
+    })
+  }, [])
+
+  React.useEffect(() => {
+    socket.on('recebe.banidos', (banidos) => {
+      setBanidos(banidos)
+      console.log(banidos)
     })
   }, [])
 
