@@ -16,14 +16,12 @@ function CreateRoom() {
     }, [sala])
 
     const createRoom = React.useCallback(() => {
-        if (localStorage.getItem('id_usuario'))
-            api.post('/salas', { id_moderador: localStorage.getItem('id_usuario') }).then(response => setSala(response.data.id_sala))
-        else
-            api.post('/usuarios', { nome_usuario: username }).then(response => {
-                localStorage.setItem('id_usuario', response.data.id_usuario)
-                api.post('/salas', { id_moderador: response.data.id_usuario }).then(response => setSala(response.data.id_sala))
-                api.put(`/usuarios/${localStorage.getItem('id_usuario')}`, { id_sala: sala})
-            })
+        localStorage.removeItem("id_usuario");
+        api.post('/usuarios', { nome_usuario: username }).then(response => {
+            localStorage.setItem('id_usuario', response.data.id_usuario)
+            api.post('/salas', { id_moderador: response.data.id_usuario }).then(response => setSala(response.data.id_sala))
+            api.put(`/usuarios/${localStorage.getItem('id_usuario')}`, { id_sala: sala })
+        })
 
     })
 
