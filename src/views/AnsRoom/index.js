@@ -31,7 +31,7 @@ function AnsRoom(props) {
 
   function copyLinkToClipboard() {
     navigator.clipboard.writeText(
-      api.defaults.baseURL + 'rooms/ask/' + props.match.params.code
+      'https://interactfront.herokuapp.com/rooms/ask/' + props.match.params.code
     )
     openModal()
   }
