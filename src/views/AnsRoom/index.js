@@ -7,12 +7,13 @@ import Modal from '../../components/Modal'
 import api from '../../services/Api'
 import { useHistory } from 'react-router'
 import io from 'socket.io-client'
+import noMessages from '../../assets/no_messages.png'
 
 const socket = io(api.defaults.baseURL)
 
 function AnsRoom(props) {
   const [idSala, setIdSala] = React.useState(props.match.params.code)
-  const [perguntas, setPerguntas] = React.useState()
+  const [perguntas, setPerguntas] = React.useState(false)
   const [banidos, setBanidos] = React.useState()
   const [showModal, setShowModal] = React.useState(false)
   const [modalOpt, setModalOpt] = React.useState([])
@@ -165,11 +166,10 @@ function AnsRoom(props) {
         roomName={'Nome da Sala Aqui'}
       />
 
-      <S.LeftSide>
-        {perguntas
-          ? pergunta()
-          : null}
+      <S.LeftSide> 
+        {perguntas == false ? <img src={noMessages} alt="nomess"/> : pergunta() }
       </S.LeftSide>
+      
 
       <S.RightSide>
         <Button

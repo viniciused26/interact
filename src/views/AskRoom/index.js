@@ -119,10 +119,10 @@ function AskRoom(props) {
               if (!pergunta.is_respondida)
                 return (
                   <QuestionCard
-                    name={sala.participantes.map(nome => {
-                      if(pergunta.id_usuario === nome.id_usuario){
-                        return nome.nome_usuario}
-                    })}
+                  name={sala.participantes.map(nome => {
+                    if(pergunta.id_usuario === nome.id_usuario){
+                      return nome.nome_usuario}
+                  })}
                     id={pergunta.id_pergunta}
                     isVoted={isVoted(pergunta)}
                     upvotes={pergunta.concordaram.length}

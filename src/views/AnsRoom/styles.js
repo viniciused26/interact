@@ -10,6 +10,7 @@ export const Container = styled.div`
 export const LeftSide = styled.div`
   width: 65%;
   float: left;
+
 `
 export const RightSide = styled.div`
   width: 35%;
