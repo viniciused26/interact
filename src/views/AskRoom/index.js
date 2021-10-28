@@ -21,6 +21,9 @@ function AskRoom(props) {
   const history = useHistory()
   const [isChat, setIsChat] = React.useState(false)
 
+  const [timeSubmit, setTimeSubmit] = React.useState()
+  const [timeSent, setTimeSent] = React.useState(null)
+
   const red = () => {
     setIsChat(false)
   }
@@ -36,12 +39,18 @@ function AskRoom(props) {
   }
 
   React.useEffect(() => {
+    var now = new Date().getTime()
+    console.log((now - timeSent) / 1000)
+  })
+
+  React.useEffect(() => {
     if (idSala) {
       api.get(`/salas/${idSala}`, {}).then(response => {
         setSala(response.data)
         setPerguntas(response.data.perguntas)
         setMessages(response.data.mensagens)
         setBanidos(response.data.banidos)
+        setTimeSubmit(response.data.tempo_mensagem)
       })
     }
   }, [idSala])
@@ -77,16 +86,37 @@ function AskRoom(props) {
   }
 
   const handleSubmit = event => {
-    event.preventDefault()
-    if (texto.trim()) {
-      socket.emit('envia.pergunta', {
-        id_usuario: localStorage.getItem('id_usuario'),
-        id_sala: props.match.params.code,
-        conteudo: texto
-      })
 
+    if(timeSent === null){
+      event.preventDefault()
+      if (texto.trim()) {
+        socket.emit('envia.pergunta', {
+          id_usuario: localStorage.getItem('id_usuario'),
+          id_sala: props.match.params.code,
+          conteudo: texto
+        })
       setTexto('')
+      }
+      setTimeSent(new Date().getTime())
+    } else {
+      var now = new Date().getTime()
+      var timePast = (now - timeSent) / 1000
+      if(timePast >= timeSubmit){
+        event.preventDefault()
+        if (texto.trim()) {
+          socket.emit('envia.pergunta', {
+            id_usuario: localStorage.getItem('id_usuario'),
+            id_sala: props.match.params.code,
+            conteudo: texto
+        })
+        setTexto('')
+        }
+        setTimeSent(new Date().getTime())
+      }  
     }
+
+    
+    
   }
 
   const handleChatSubmit = event => {
@@ -163,7 +193,6 @@ function AskRoom(props) {
         {perguntas
           ? sortQuestions(perguntas).map(pergunta => {
               if (!pergunta.is_respondida)
-                if (pergunta.concordaram.length > 1)
                   return (
                     <QuestionCard
                       name={sala.participantes.map(nome => {
