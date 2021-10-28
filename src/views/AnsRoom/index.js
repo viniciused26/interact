@@ -32,7 +32,7 @@ function AnsRoom(props) {
 
   function copyLinkToClipboard() {
     navigator.clipboard.writeText(
-      'https://interactfront.herokuapp.com/rooms/ask/' + props.match.params.code
+      'https://interactfront.herokuapp.com/',
     )
     openModal()
   }
@@ -68,15 +68,16 @@ function AnsRoom(props) {
     })
   }, [])
 
-  function pergunta () {
+  function pergunta() {
     var perguntasNaoRespondidas = []
     sortQuestions(perguntas).map(pergunta => {
       if (!pergunta.is_respondida)
-      perguntasNaoRespondidas.push(
+        perguntasNaoRespondidas.push(
           <QuestionCard
             name={sala.participantes.map(nome => {
-              if(pergunta.id_usuario === nome.id_usuario){
-                return nome.nome_usuario}
+              if (pergunta.id_usuario === nome.id_usuario) {
+                return nome.nome_usuario
+              }
             })}
             isVote={pergunta.is_respondida}
             onClick={() => {
@@ -129,7 +130,7 @@ function AnsRoom(props) {
       secndBtnFunc: copyLinkToClipboard
     }
   ]
-  
+
   return (
     <S.Container>
       <Modal
@@ -143,22 +144,23 @@ function AnsRoom(props) {
         background="#24364D"
         text={perguntas
           ? perguntas.map(pergunta => {
-              if (pergunta.is_respondida)
-                return (
-                  <QuestionCard
-                    name={sala.participantes.map(nome => {
-                      if(pergunta.id_usuario === nome.id_usuario){
-                        return nome.nome_usuario}
-                    })}
-                    isVote={pergunta.is_respondida}
-                    id={pergunta.id_pergunta}
-                    upvotes={pergunta.concordaram.length}
-                    isModerator={true}
-                    text={pergunta.conteudo}
-                    isSmall={true}
-                  />
-                )
-            })
+            if (pergunta.is_respondida)
+              return (
+                <QuestionCard
+                  name={sala.participantes.map(nome => {
+                    if (pergunta.id_usuario === nome.id_usuario) {
+                      return nome.nome_usuario
+                    }
+                  })}
+                  isVote={pergunta.is_respondida}
+                  id={pergunta.id_pergunta}
+                  upvotes={pergunta.concordaram.length}
+                  isModerator={true}
+                  text={pergunta.conteudo}
+                  isSmall={true}
+                />
+              )
+          })
           : null}
         time={<h3>Selecione o tempo de intervalo de envio de uma mensagem</h3>}
         isTimer={true}
@@ -167,10 +169,10 @@ function AnsRoom(props) {
         roomName={sala ? sala.nome_sala : null}
       />
 
-      <S.LeftSide> 
-        {perguntas == false ? <img src={noMessages} alt="nomess"/> : pergunta() }
+      <S.LeftSide>
+        {perguntas == false ? <img src={noMessages} alt="nomess" /> : pergunta()}
       </S.LeftSide>
-      
+
 
       <S.RightSide>
         <Button
