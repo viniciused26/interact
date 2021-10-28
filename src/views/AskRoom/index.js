@@ -15,6 +15,7 @@ function AskRoom(props) {
   const [idSala, setIdSala] = React.useState(props.match.params.code)
   const [sala, setSala] = React.useState()
   const [perguntas, setPerguntas] = React.useState()
+  const [messages, setMessages] = React.useState()
   const [banidos, setBanidos] = React.useState()
   const [texto, setTexto] = React.useState('')
   const history = useHistory()
@@ -39,6 +40,7 @@ function AskRoom(props) {
       api.get(`/salas/${idSala}`, {}).then(response => {
         setSala(response.data)
         setPerguntas(response.data.perguntas)
+        setMessages(response.data.mensagens)
         setBanidos(response.data.banidos)
       })
     }
@@ -47,6 +49,12 @@ function AskRoom(props) {
   React.useEffect(() => {
     socket.on('recebe.perguntas', (perguntas) => {
       setPerguntas(perguntas)
+    })
+  }, [])
+
+  React.useEffect(() => {
+    socket.on('recebe.mensagens', (msg) => {
+      setMessages(msg)
     })
   }, [])
 
@@ -74,6 +82,20 @@ function AskRoom(props) {
     }
   }
 
+  const handleChatSubmit = event => {
+    event.preventDefault()
+    if (texto.trim()) {
+      socket.emit('envia.mensagem', {
+        id_usuario: localStorage.getItem('id_usuario'),
+        id_sala: props.match.params.code,
+        conteudo: texto
+      })
+
+      setTexto('')
+    }
+  }
+
+
   function sortQuestions(questions) {
     var sortedQuestions = questions.slice().sort(function (a, b) {
       return b.concordaram.length - a.concordaram.length;
@@ -85,6 +107,7 @@ function AskRoom(props) {
     const is_concordado = pergunta.concordaram.find(el => el.id_usuario = localStorage.getItem('id_usuario'))
     return is_concordado != null
   }
+
 
   return (
     <S.Container>
@@ -114,7 +137,7 @@ function AskRoom(props) {
         }
         isModerator={false}
         navigateToHomepage={navigateToHomepage}
-        roomName="Nome da Sala Aqui"
+        roomName={sala ? sala.nome_sala : null}
       />
       <S.HostName>
         <span>Host: {sala ? sala.participantes.map(nome => {
@@ -173,8 +196,8 @@ function AskRoom(props) {
           </div>
 
           <div id={isChat === false ? "none" : null}>
-          {perguntas
-          ? perguntas.map((pergunta) => {
+          {messages
+          ? messages.map((pergunta) => {
               if (!pergunta.is_respondida)
                 return (
                   <QuestionCard
@@ -208,9 +231,9 @@ function AskRoom(props) {
           onChange={handleChange}
         />
         <SmallButton
-          onClick={handleSubmit}
+          onClick={isChat === false ? handleSubmit : handleChatSubmit}
           color={"#E94560"}
-          title={"Enviar Pergunta"}
+          title={"Enviar"}
         />
       </S.Bottom>
     </S.Container>

@@ -9,6 +9,7 @@ function CreateRoom() {
     const history = useHistory()
     const [sala, setSala] = React.useState();
     const [username, setUsername] = React.useState('');
+    const [roomname, setRoomname] = React.useState('');
     const firstUpdate = React.useRef(true);
 
     React.useLayoutEffect(() => {
@@ -20,14 +21,18 @@ function CreateRoom() {
         localStorage.removeItem("id_usuario");
         api.post('/usuarios', { nome_usuario: username }).then(response => {
             localStorage.setItem('id_usuario', response.data.id_usuario)
-            api.post('/salas', { id_moderador: response.data.id_usuario }).then(response => setSala(response.data.id_sala))
+            api.post('/salas', { id_moderador: response.data.id_usuario, nome_sala: roomname, descricao_sala: "Default" }).then(response => setSala(response.data.id_sala))
             api.put(`/usuarios/${localStorage.getItem('id_usuario')}`, { id_sala: sala })
         })
 
     })
 
-    function handleUserameChange(event) {
+    function handleUsernameChange(event) {
         setUsername(event.target.value)
+    }
+
+    function handleRoomnameChange(event) {
+        setRoomname(event.target.value)
     }
 
     function navigateToHomepage() {
@@ -38,8 +43,8 @@ function CreateRoom() {
         <S.Container>
             <img src={logo} alt="Logo" />
             <span> Crie uma nova sala </span>
-            <input type="text" onChange={handleUserameChange} placeholder="Como deseja ser chamado?" />
-            <input type="text" placeholder="Qual deve ser o nome da sala?" maxlength="24" />
+            <input type="text" onChange={handleUsernameChange} placeholder="Como deseja ser chamado?" />
+            <input type="text" onChange={handleRoomnameChange} placeholder="Qual deve ser o nome da sala?" maxlength="24" />
             <SmallButton onClick={createRoom} color={'#E94560'} title={'CRIAR'} />
             <br /><br />
             <SmallButton onClick={navigateToHomepage} color={'#0f3460'} title={'VOLTAR'} />

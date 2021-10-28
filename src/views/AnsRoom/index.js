@@ -163,7 +163,7 @@ function AnsRoom(props) {
         isTimer={true}
         isModerator={true}
         navigateToHomepage={navigateToHomepage}
-        roomName={'Nome da Sala Aqui'}
+        roomName={sala ? sala.nome_sala : null}
       />
 
       <S.LeftSide> 
