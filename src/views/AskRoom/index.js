@@ -18,6 +18,15 @@ function AskRoom(props) {
   const [banidos, setBanidos] = React.useState()
   const [texto, setTexto] = React.useState('')
   const history = useHistory()
+  const [isChat, setIsChat] = React.useState(false)
+
+  const red = () => {
+    setIsChat(false);
+  }
+
+  const blue = () => {
+    setIsChat(true);
+  }
 
   const navigateToHomepage = () => {
     api.delete(`/usuarios/${localStorage.getItem("id_usuario")}`, {});
@@ -134,8 +143,14 @@ function AskRoom(props) {
             })
           : null}
       </S.LeftSide>
-
-      <S.RightSide>
+      
+      <S.ChatButtons>
+        <SmallButton onClick={red} color={"#E94560"} title={"Dúvidas"} id="yeah"/>
+        <SmallButton onClick={blue} color={"#29415E"} title={"Bate-papo"} id="yeah"/>
+      </S.ChatButtons>
+     
+      <S.RightSide color={isChat === false ? "#E94560" : "#29415E"}>
+        <div id={isChat === false ? null : "none"}>
         {perguntas
           ? perguntas.map((pergunta) => {
               if (!pergunta.is_respondida)
@@ -155,6 +170,33 @@ function AskRoom(props) {
                 );
             })
           : null}
+          </div>
+
+          <div id={isChat === false ? "none" : null}>
+          {perguntas
+          ? perguntas.map((pergunta) => {
+              if (!pergunta.is_respondida)
+                return (
+                  <QuestionCard
+                    name={sala.participantes.map(nome => {
+                      if(pergunta.id_usuario === nome.id_usuario){
+                        return nome.nome_usuario}
+                    })}
+                    id={pergunta.id_pergunta}
+                    hideButton={true}
+                    text={pergunta.conteudo}
+                    isSmall={true}
+                  />
+                );
+            })
+          : null}
+          </div>
+
+
+
+
+
+          
       </S.RightSide>
 
       <S.Bottom>

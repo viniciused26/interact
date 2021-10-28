@@ -94,7 +94,7 @@ function QuestionCard(props) {
       <S.TopSide width={props.isSmall == false ? '950px' : '80%'} >
 
         <S.TopLeftSide>
-          <span>{props.name}</span>
+          <div id="username">{props.name}</div>
         </S.TopLeftSide>
 
         <S.TopRightSide>
@@ -112,9 +112,8 @@ function QuestionCard(props) {
           <span>{props.text}</span>
         </S.BottomLeftSide>
 
-        <S.BottomRightSide>
-          <button
-            onClick={handleClick} >
+        <S.BottomRightSide id={props.hideButton === true ? "none" : null}>
+          <button onClick={handleClick} >
             {props.isModerator == false ? (
               <img
                 src={isClicked ? upvoteButtonTrue : upvoteButtonFalse}

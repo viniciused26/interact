@@ -34,6 +34,8 @@ export const RightSide = styled.div`
   width: 50%;
   height: 80px;
 
+  
+
   display: flex;
   justify-content: flex-end;
   align-items: center;

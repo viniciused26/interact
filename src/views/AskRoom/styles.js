@@ -6,6 +6,18 @@ export const Container = styled.div`
   background-color: #1a1a2e;
   overflow-x: hidden;
 `
+
+export const ChatButtons = styled.div`
+  display: flex;
+  align-items: center;
+
+  #yeah {
+    margin-left: 100px;
+    margin-right: 20px;
+  }
+
+`
+
 export const HostName = styled.div`
   text-align: center;
   font-size: 30px;
@@ -26,9 +38,8 @@ export const HostName = styled.div`
   }
 
 `
-
 export const LeftSide = styled.div`
-  width: 50%;
+  width: 45%;
   height: 60vh;
   float: left;
   overflow-y: scroll;
@@ -42,10 +53,16 @@ export const LeftSide = styled.div`
   }
 `
 export const RightSide = styled.div`
-  width: 50%;
-  height: 60vh;
+  background: ${props => props.color};
+  width: 55%;
+  height: 55vh;
   float: left;
   overflow-y: scroll;
+
+  #none {
+    display: none;
+  }
+
 `
 
 export const Bottom = styled.div`
@@ -57,6 +74,7 @@ export const Bottom = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  
 
   input {
     margin-top: 25px;
@@ -68,6 +86,7 @@ export const Bottom = styled.div`
     padding: 0 16px;
     background: #fff;
     border: 2px solid #16213e;
+    
   }
 
   input::placeholder {

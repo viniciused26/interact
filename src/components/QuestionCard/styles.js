@@ -26,6 +26,12 @@ export const TopLeftSide = styled.div`
   display: flex;
   align-items: center;
   padding-left: 25px;
+
+  #username {
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+  }
 `
 
 export const TopRightSide = styled.div`
@@ -109,6 +115,7 @@ export const BottomRightSide = styled.div`
       opacity: 0.6;
       cursor: not-allowed;
     }
+
   }
 
   img {
@@ -121,5 +128,9 @@ export const BottomRightSide = styled.div`
     color: white;
     font-weight: bold;
     font-size: 15px;
+  }
+
+  #none {
+    display: none;
   }
 `
