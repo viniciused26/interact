@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react'
 
-import * as S from "./styles";
+import * as S from './styles'
 
 import Header from '../../components/Header'
 import QuestionCard from '../../components/QuestionCard'
@@ -22,16 +22,16 @@ function AskRoom(props) {
   const [isChat, setIsChat] = React.useState(false)
 
   const red = () => {
-    setIsChat(false);
+    setIsChat(false)
   }
 
   const blue = () => {
-    setIsChat(true);
+    setIsChat(true)
   }
 
   const navigateToHomepage = () => {
-    api.delete(`/usuarios/${localStorage.getItem("id_usuario")}`, {});
-    localStorage.removeItem("id_usuario");
+    api.delete(`/usuarios/${localStorage.getItem('id_usuario')}`, {})
+    localStorage.removeItem('id_usuario')
     history.push('/')
   }
 
@@ -47,26 +47,26 @@ function AskRoom(props) {
   }, [idSala])
 
   React.useEffect(() => {
-    socket.on('recebe.perguntas', (perguntas) => {
+    socket.on('recebe.perguntas', perguntas => {
       setPerguntas(perguntas)
     })
   }, [])
 
   React.useEffect(() => {
-    socket.on('recebe.mensagens', (msg) => {
+    socket.on('recebe.mensagens', msg => {
       setMessages(msg)
     })
   }, [])
 
   React.useEffect(() => {
-    socket.on('recebe.banidos', (banidos) => {
+    socket.on('recebe.banidos', banidos => {
       setBanidos(banidos)
       console.log(banidos)
     })
   }, [])
 
   function handleChange(event) {
-    setTexto(event.target.value);
+    setTexto(event.target.value)
   }
 
   const handleSubmit = event => {
@@ -95,19 +95,19 @@ function AskRoom(props) {
     }
   }
 
-
   function sortQuestions(questions) {
     var sortedQuestions = questions.slice().sort(function (a, b) {
-      return b.concordaram.length - a.concordaram.length;
-    });
-    return sortedQuestions;
+      return b.concordaram.length - a.concordaram.length
+    })
+    return sortedQuestions
   }
 
   function isVoted(pergunta) {
-    const is_concordado = pergunta.concordaram.find(el => el.id_usuario = localStorage.getItem('id_usuario'))
+    const is_concordado = pergunta.concordaram.find(
+      el => (el.id_usuario = localStorage.getItem('id_usuario'))
+    )
     return is_concordado != null
   }
-
 
   return (
     <S.Container>
@@ -116,13 +116,14 @@ function AskRoom(props) {
         background="#24364D"
         text={
           perguntas
-            ? perguntas.map((pergunta) => {
+            ? perguntas.map(pergunta => {
                 if (pergunta.is_respondida)
                   return (
                     <QuestionCard
                       name={sala.participantes.map(nome => {
-                        if(pergunta.id_usuario === nome.id_usuario){
-                          return nome.nome_usuario}
+                        if (pergunta.id_usuario === nome.id_usuario) {
+                          return nome.nome_usuario
+                        }
                       })}
                       id={pergunta.id_pergunta}
                       isVoted={isVoted(pergunta)}
@@ -131,7 +132,7 @@ function AskRoom(props) {
                       text={pergunta.conteudo}
                       isSmall={true}
                     />
-                  );
+                  )
               })
             : null
         }
@@ -140,86 +141,100 @@ function AskRoom(props) {
         roomName={sala ? sala.nome_sala : null}
       />
       <S.HostName>
-        <span>Host: {sala ? sala.participantes.map(nome => {
-              if(sala.id_moderador === nome.id_usuario){
-                return nome.nome_usuario}
-            }): null}</span>
+        <span>
+          Host:{' '}
+          {sala
+            ? sala.participantes.map(nome => {
+                if (sala.id_moderador === nome.id_usuario) {
+                  return nome.nome_usuario
+                }
+              })
+            : null}
+        </span>
       </S.HostName>
       <S.LeftSide>
         {perguntas
-          ? sortQuestions(perguntas).map((pergunta) => {
+          ? sortQuestions(perguntas).map(pergunta => {
               if (!pergunta.is_respondida)
-                return (
-                  <QuestionCard
-                  name={sala.participantes.map(nome => {
-                    if(pergunta.id_usuario === nome.id_usuario){
-                      return nome.nome_usuario}
-                  })}
-                    id={pergunta.id_pergunta}
-                    isVoted={isVoted(pergunta)}
-                    upvotes={pergunta.concordaram.length}
-                    isModerator={false}
-                    text={pergunta.conteudo}
-                    isSmall={true}
-                  />
-                );
+                if (pergunta.concordaram.length > 3)
+                  return (
+                    <QuestionCard
+                      name={sala.participantes.map(nome => {
+                        if (pergunta.id_usuario === nome.id_usuario) {
+                          return nome.nome_usuario
+                        }
+                      })}
+                      id={pergunta.id_pergunta}
+                      isVoted={isVoted(pergunta)}
+                      upvotes={pergunta.concordaram.length}
+                      isModerator={false}
+                      text={pergunta.conteudo}
+                      isSmall={true}
+                    />
+                  )
             })
           : null}
       </S.LeftSide>
-      
+
       <S.ChatButtons>
-        <SmallButton onClick={red} color={"#E94560"} title={"Dúvidas"} id="yeah"/>
-        <SmallButton onClick={blue} color={"#29415E"} title={"Bate-papo"} id="yeah"/>
+        <SmallButton
+          onClick={red}
+          color={'#E94560'}
+          title={'Dúvidas'}
+          id="yeah"
+        />
+        <SmallButton
+          onClick={blue}
+          color={'#29415E'}
+          title={'Bate-papo'}
+          id="yeah"
+        />
       </S.ChatButtons>
-     
-      <S.RightSide color={isChat === false ? "#E94560" : "#29415E"}>
-        <div id={isChat === false ? null : "none"}>
-        {perguntas
-          ? perguntas.map((pergunta) => {
-              if (!pergunta.is_respondida)
-                return (
-                  <QuestionCard
-                    name={sala.participantes.map(nome => {
-                      if(pergunta.id_usuario === nome.id_usuario){
-                        return nome.nome_usuario}
-                    })}
-                    id={pergunta.id_pergunta}
-                    isVoted={isVoted(pergunta)}
-                    upvotes={pergunta.concordaram.length}
-                    isModerator={false}
-                    text={pergunta.conteudo}
-                    isSmall={true}
-                  />
-                );
-            })
-          : null}
-          </div>
 
-          <div id={isChat === false ? "none" : null}>
+      <S.RightSide color={isChat === false ? '#E94560' : '#29415E'}>
+        <div id={isChat === false ? null : 'none'}>
+          {perguntas
+            ? perguntas.map(pergunta => {
+                if (!pergunta.is_respondida)
+                  return (
+                    <QuestionCard
+                      name={sala.participantes.map(nome => {
+                        if (pergunta.id_usuario === nome.id_usuario) {
+                          return nome.nome_usuario
+                        }
+                      })}
+                      id={pergunta.id_pergunta}
+                      isVoted={isVoted(pergunta)}
+                      upvotes={pergunta.concordaram.length}
+                      isModerator={false}
+                      text={pergunta.conteudo}
+                      isSmall={true}
+                    />
+                  )
+              })
+            : null}
+        </div>
+
+        <div id={isChat === false ? 'none' : null}>
           {messages
-          ? messages.map((pergunta) => {
-              if (!pergunta.is_respondida)
-                return (
-                  <QuestionCard
-                    name={sala.participantes.map(nome => {
-                      if(pergunta.id_usuario === nome.id_usuario){
-                        return nome.nome_usuario}
-                    })}
-                    id={pergunta.id_pergunta}
-                    hideButton={true}
-                    text={pergunta.conteudo}
-                    isSmall={true}
-                  />
-                );
-            })
-          : null}
-          </div>
-
-
-
-
-
-          
+            ? messages.map(pergunta => {
+                if (!pergunta.is_respondida)
+                  return (
+                    <QuestionCard
+                      name={sala.participantes.map(nome => {
+                        if (pergunta.id_usuario === nome.id_usuario) {
+                          return nome.nome_usuario
+                        }
+                      })}
+                      id={pergunta.id_pergunta}
+                      hideButton={true}
+                      text={pergunta.conteudo}
+                      isSmall={true}
+                    />
+                  )
+              })
+            : null}
+        </div>
       </S.RightSide>
 
       <S.Bottom>
@@ -232,12 +247,12 @@ function AskRoom(props) {
         />
         <SmallButton
           onClick={isChat === false ? handleSubmit : handleChatSubmit}
-          color={"#E94560"}
-          title={"Enviar"}
+          color={'#E94560'}
+          title={'Enviar'}
         />
       </S.Bottom>
     </S.Container>
-  );
+  )
 }
 
-export default AskRoom;
+export default AskRoom
