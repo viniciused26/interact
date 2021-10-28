@@ -138,6 +138,7 @@ function AnsRoom(props) {
         modalOptions={modalOpt}
       />
       <Header
+        idSala={idSala}
         height='400px'
         background="#24364D"
         text={perguntas

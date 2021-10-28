@@ -8,12 +8,18 @@ import historicbtn from '../../assets/historicButton.png'
 import timerbtn from '../../assets/timerButton.png'
 import Modal from '../../components/Modal'
 import { useHistory } from 'react-router-dom'
+import api from '../../services/Api'
 
 function Header(props) {
   const [showModal, setShowModal] = React.useState(false);
   const [modalOpt, setModalOpt] = React.useState([]);
 
   const history = useHistory()
+
+  function submitTimer(timer) {
+    api.put(`/salas/${props.idSala}`, { tempo_mensagem: timer })
+    openModal()
+  }
 
   const openModal = () => {
     setShowModal(prev => !prev);
@@ -52,7 +58,7 @@ function Header(props) {
       textTitle: "Cronometro das perguntas",
       text: props.time,
       isTimer: props.isTimer,
-      closeModel: openModal
+      closeModel: submitTimer
     }
   ];
 

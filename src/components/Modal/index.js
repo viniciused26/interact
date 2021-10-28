@@ -5,6 +5,7 @@ import { useSpring, animated } from "react-spring";
 import Button from "../../components/Button";
 import closebtn from "../../assets/closeButton.png";
 
+
 function Modal(props) {
   const modalRef = useRef();
 
@@ -48,7 +49,7 @@ function Modal(props) {
                     width="230px"
                     height="60px"
                     margin="20px"
-                    onClick={props.modalOptions.closeModel}
+                    onClick={() => props.modalOptions.closeModel(0)}
                   />
                   <Button
                     title="15 Segundos"
@@ -56,7 +57,7 @@ function Modal(props) {
                     width="230px"
                     height="60px"
                     margin="20px"
-                    onClick={props.modalOptions.closeModel}
+                    onClick={() => props.modalOptions.closeModel(15)}
                   />
                   <Button
                     title="30 Segundos"
@@ -64,7 +65,7 @@ function Modal(props) {
                     width="230px"
                     height="60px"
                     margin="20px"
-                    onClick={props.modalOptions.closeModel}
+                    onClick={() => props.modalOptions.closeModel(30)}
                   />
                 </S.Bottom>
               ) : props.modalOptions.firstBtnColor ? (
