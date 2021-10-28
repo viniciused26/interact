@@ -156,22 +156,22 @@ function AskRoom(props) {
         {perguntas
           ? sortQuestions(perguntas).map(pergunta => {
               if (!pergunta.is_respondida)
-                if (pergunta.concordaram.length > 3)
-                  return (
-                    <QuestionCard
-                      name={sala.participantes.map(nome => {
-                        if (pergunta.id_usuario === nome.id_usuario) {
-                          return nome.nome_usuario
-                        }
-                      })}
-                      id={pergunta.id_pergunta}
-                      isVoted={isVoted(pergunta)}
-                      upvotes={pergunta.concordaram.length}
-                      isModerator={false}
-                      text={pergunta.conteudo}
-                      isSmall={true}
-                    />
-                  )
+                //if (pergunta.concordaram.length > 3)
+                return (
+                  <QuestionCard
+                    name={sala.participantes.map(nome => {
+                      if (pergunta.id_usuario === nome.id_usuario) {
+                        return nome.nome_usuario
+                      }
+                    })}
+                    id={pergunta.id_pergunta}
+                    isVoted={isVoted(pergunta)}
+                    upvotes={pergunta.concordaram.length}
+                    isModerator={false}
+                    text={pergunta.conteudo}
+                    isSmall={true}
+                  />
+                )
             })
           : null}
       </S.LeftSide>
