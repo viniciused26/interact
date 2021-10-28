@@ -59,11 +59,18 @@ function AskRoom(props) {
   }, [])
 
   React.useEffect(() => {
-    socket.on('recebe.banidos', banidos => {
+    socket.on('recebe.banidos', (banidos) => {
       setBanidos(banidos)
       console.log(banidos)
+      banidos.map((ban) =>{
+        if(ban.id_usuario === parseInt(localStorage.getItem('id_usuario'))){
+          window.alert("Você foi expulso da sala por comentário indevido pelo proprietário da sala!")
+          history.push('/')
+        }
+      })
     })
   }, [])
+
 
   function handleChange(event) {
     setTexto(event.target.value)
